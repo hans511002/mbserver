@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>zk数据编辑器</title>
+  <link href="js/style.css" rel="stylesheet" type="text/css" />
+   <script type="text/javascript" src="js/basic.js"></script> 
+ 	<script language="javascript" src="js/MzTreeView.js"></script>
+  	<script type="text/javascript" src="js/Common.js"></script> 
+  	<script type="text/javascript" src="js/formatNumber.js"></script> 
+  	<script type="text/javascript" src="js/OPString.js"></script> 
+  	<script type="text/javascript" src="js/json.js"></script> 
+
+	<script type='text/javascript' src='/dwr/engine.js'></script>
+  	<script type='text/javascript' src='/dwr/util.js'></script>
+  	<script type='text/javascript' src='/dwr/interface/ZKAction.js'></script>
+  	
+  <style type="text/css">
+  body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+body,td,th {
+	font-size: 12px;
+}
+
+body
+{
+	margin-top: 20px;
+	margin-right: 0px;
+	margin-bottom: 0px; 
+	margin-left: 10px; 
+	padding-top: 0px; 
+	padding-right: 0px; 
+	padding-bottom: 0px; 
+	padding-left: 0px; 
+	border-color:#808080 #FFFFFF #FFFFFF #808080; 
+	border-style:none; 
+	border-top-width: 0px; 
+	border-right-width: 0px; 
+	border-bottom-width: 0px; 
+	border-left-width: 0px;
+	line-height: 18px;
+	font-family: "Arial", "宋体";
+	SCROLLBAR-FACE-COLOR: #eeeeff; 
+    SCROLLBAR-HIGHLIGHT-COLOR: menu; 
+    SCROLLBAR-SHADOW-COLOR: #999999; 
+    SCROLLBAR-3DLIGHT-COLOR: #777777; 
+    SCROLLBAR-ARROW-COLOR: #ffffff;  
+    SCROLLBAR-TRACK-COLOR: #dddddd; 
+    SCROLLBAR-DARKSHADOW-COLOR: menu
+}
+
+  </style> 
+  </head>
+<body>
+	<table>
+	<tr><td><input type=text id=nodePath style="width:300px;" /></td>
+	<td><input id=saveButton type=button style="width:80px;" value="save..." onclick="saveNode()" />
+	<input id=rmrButton type=button  style="width:80px;" value="rmr..." onclick="rmrNode()" />
+	<input id=rmrChildButton type=button  style="width:80px;" value="rmr child..." onclick="rmrChildNode()" />
+ 	<span style="padding-left:20px;" id=optmsg ></span>
+ 	<span style="padding-left:20px;" id=comType ></span>
+	<div style="position: inherit;float: right;padding-right: 200px;">
+ 
+	<input id=formatButton type=checkbox  style="width:20px;" checked onchange="changeFormat()" /><label id=formatLabel for=formatButton >json format</label></div>
+	</td></tr>
+	<tr> 
+	<td  style="width:300px; vertical-align: top; height:100%;"><div  id=treeNode 
+	style="
+    overflow: auto;border-width: 1px;
+    border-style: solid;
+    height: 650px;
+	">
+	
+	</div></td>
+	<td style="width:80%;vertical-align: top;">
+	<textarea id=nodeValue rows="45" cols="160">ddd</textarea>
+	</td>
+	</tr>
+	</table>
+	<div id="loading" style="background-color: rgb(239, 239, 239);position: absolute;top: 47px;left: 320px;height: 451px;width: 80%;padding-top: 200px;display: block;" align="center"  >loading .......
+	</div>
+ 	   	<script type="text/javascript" src="/js/page/zkctl.js"></script>
+	 
+<script type="text/javascript">
+		 pageInit();
+		 
+  
+	</script>
+	 
+	
+ </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WebSocket Chat</title>
+</head>
+<body>
+    <script type="text/javascript" src="/js/DateFun.js"></script>
+    <form onsubmit="return false;">
+        <h3>后端任务日志：</h3>
+        <textarea id="responseText" style="width: 1300px; height: 500px;"></textarea>
+        <br> 
+        <input type="text" name="message" id="message"  style="width: 800px" value="Welcome to ">
+        <input type="button" onclick="sendMsg()" value="send ...">
+        <input type="button" onclick="javascript:document.getElementById('responseText').value=''" value="清空记录"><br/>
+        <label>选择任务: </label>
+        <select id=taskId onchange="changeLog(this)" style="width: 500px">
+        </select>
+        <div id="taskInfo"></div>
+        
+    </form>
+    <br>
+    <br> 
+    <script type="text/javascript" src="/js/httpRequest.js"></script>
+    <script type="text/javascript" src="/js/page/tasklog.js"></script>
+ </body>
+</html>

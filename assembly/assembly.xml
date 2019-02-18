@@ -1,0 +1,57 @@
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <dependencySets>
+    <dependencySet>
+      <useProjectArtifact>false</useProjectArtifact>
+      <outputDirectory>lib/common</outputDirectory>
+      
+    </dependencySet>
+  </dependencySets>
+  <fileSets>
+    <fileSet>
+       <directory>target</directory>
+      <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>${finalName}*.jar</include>
+      </includes>
+      
+    </fileSet>
+    <fileSet>
+      <directory>lib/common</directory>
+      <includes><include>ftpTool.jar</include></includes>
+      <outputDirectory>/lib/common</outputDirectory>
+    </fileSet> 
+    <fileSet>
+      <directory>lib/rdbms</directory>
+      <includes><include>DbSupport-1.0.0.jar</include></includes>
+      <outputDirectory>/lib/common</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>bin</directory>
+      <outputDirectory>/bin</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>conf</directory>
+      <outputDirectory>/conf</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>bin</directory>
+      <outputDirectory>/bin</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>sbin</directory>
+      <outputDirectory>/sbin</outputDirectory>
+    </fileSet>
+    <fileSet>
+        <directory>.</directory>
+	    <includes>
+	    <include>start.cmd</include>
+	    <include>start.sh</include>
+	    </includes>
+        <outputDirectory>/</outputDirectory>
+    </fileSet>
+   </fileSets>
+</assembly>

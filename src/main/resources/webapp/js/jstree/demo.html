@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+	"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+    <script language="javascript">var t1 = new Date().getTime();</script>
+
+    <title></title>
+    <!-- The xtree script file -->
+
+    <script src="xtree.js"></script>
+
+    <script src="webfxcheckboxtreeitem.js"></script>
+
+    <!-- Modify this file to change the way the tree looks -->
+    <link type="text/css" rel="stylesheet" href="xtree.css">
+    <style>
+	body { background: white; color: black; }
+	input { width: 120px; }
+	
+	input.tree-check-box {
+ 	width:		auto;
+ 	margin:		0;
+ 	padding:	0;
+ 	height:		14px;
+ 	vertical-align:	middle;
+ }
+</style>
+</head>
+<body>
+    <div id="innert" onchange="sclick(this)">
+    </div><input type="checkbox" id="12"  />
+    <a href="saf" target="_blank"><label id="saf" for="12">dsgdg</label></a>
+    <textarea id="treeStr" cols=80 rows=20></textarea>
+    <!-- js file containing the tree content, edit this file to alter the menu,
+     the menu will be inserted where this tag is located in the document -->
+
+    <script>
+    window.onload = function()
+    {
+       // alert("加载本页耗时 "+ (new Date().getTime()-t1) +" 毫秒");
+    }
+	    function getQuery(name)
+    {
+      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r!=null) return unescape(r[2]); return null;
+    }
+    function getObjectById(id)
+    {
+      if (typeof(id) != "string" || id == "") return null;
+      if (document.all) return document.all(id);
+      if (document.getElementById) return document.getElementById(id);
+      try {return eval(id);} catch(e){ return null;}
+    }
+
+   var startTime=new Date();
+   var tot = getQuery("total");      tot = !tot || isNaN(tot) ? 20 : tot;
+   var cns = getQuery("childNodes"); cns = !cns || isNaN(cns) ? 5 : cns;
+    webFXTreeConfig.AutoChecked=true;
+    webFXTreeConfig.CheckedType=true;
+ 
+
+
+	if (document.getElementById) 
+	{
+ 	var tree = new WebFXTree('');
+ 	tree.setBehavior('classic');    
+	for (i=0; i<cns; i++)
+	{
+	 var node=tree.add(new WebFXCheckBoxTreeItem('text:节点 '+ i, ""));
+	 node.disabled=true;
+	 	 node.click="sclick";     
+    }
+	var count=cns;
+	var  node=tree;
+	var n;
+	for (i=cns;i<tot ; i++)
+	{
+          	
+          n=node.childNodes[i % cns];
+if(n.childNodes.length>=10)
+{
+	node=node.childNodes[i % cns];
+	n=node.childNodes[i % cns]
+}
+    	var cnode=n.add(new WebFXCheckBoxTreeItem('text:节点 '+ i, "", true));
+	cnode.click="sclick()";
+	//cnode.change="sclick";
+  	//cnode.disabled="true";
+
+
+  } 
+
+   
+ 
+//	var a = new WebFXCheckBoxTreeItem('1');
+//	tree.add(a);
+//	var b = new WebFXCheckBoxTreeItem('1.1');
+//	b.disabled=true;
+//	b.action="bbbb";
+//	a.add(b);
+//	b.add(new WebFXCheckBoxTreeItem('1.1.1'));
+//	b.add(new WebFXCheckBoxTreeItem('1.1.2'));
+//	b.add(new WebFXCheckBoxTreeItem('1.1.3'));
+//	var f = new WebFXCheckBoxTreeItem('1.1.4');
+//	b.add(f);
+//	f.add(new WebFXTreeItem('1.1.4.1'));
+//	f.add(new WebFXTreeItem('1.1.4.2'));
+//	f.add(new WebFXTreeItem('1.1.4.3'));
+//	var c = new WebFXTreeItem('1.2');
+//		c.click="sclick";
+//	a.add(c);
+//	c.add(new WebFXTreeItem('1.5.1'));
+//	c.add(new WebFXTreeItem('1.5.2'));
+//	c.add(new WebFXTreeItem('1.5.3'));
+//	a.add(new WebFXTreeItem('1.3'));
+//	a.add(new WebFXTreeItem('1.4'));
+//	a.add(new WebFXTreeItem('1.5'));
+//	var d = new WebFXTreeItem('2');
+//	tree.add(d);
+//	var e = new WebFXTreeItem('2.1');
+//	d.add(e);
+//	e.add(new WebFXTreeItem('2.1.1'));
+//	e.add(new WebFXTreeItem('2.1.2'));
+//	e.add(new WebFXTreeItem('2.1.3'));
+//	d.add(new WebFXTreeItem('2.2'));
+//	d.add(new WebFXTreeItem('2.3'));
+//	d.add(new WebFXTreeItem('2.4'));
+// 
+	document.write(tree);
+	treeStr.value=tree;
+	//tree.expandAll();
+ }
+function sclick(node)
+{
+	innert.innerHTML="<br>"+node.id;
+	innert.innerHTML+="<br>"+node.getChecked();
+	innert.innerHTML+="<br>"+event.srcElement.id;
+}
+    </script>
+
+</body>
+</html>
