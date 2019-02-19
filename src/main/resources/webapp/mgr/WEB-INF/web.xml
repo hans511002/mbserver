@@ -8,7 +8,7 @@
 	<display-name>Simple web application</display-name>
 	<context-param>
 		<param-name>conf_props</param-name>
-		<param-value>conf.properties,local.properties</param-value>
+		<param-value>local.properties</param-value>
 	</context-param>
 	<context-param>
 		<param-name>sysStartInitClass</param-name>

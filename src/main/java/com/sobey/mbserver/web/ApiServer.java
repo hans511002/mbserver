@@ -80,11 +80,12 @@ public class ApiServer {
 				webApp = home + File.separator + "tmp" + File.separator + "webapp";
 			}
 		}
+		String welcomeFiles[] = new String[] { "index.html", "index.jsp" };
 		String webBase = webApp + File.separator + "web";
 		web = new WebAppContext(webBase, "/web");
 		web.setDisplayName("web");
 		web.setContextPath("/web");
-		web.setWelcomeFiles(new String[] { "index.html", "deployLog.html", "installLog.html" });
+		web.setWelcomeFiles(welcomeFiles);
 		web.setDescriptor("WEB-INF/web.xml");
 		// web.setWar(webBase);
 		web.setParentLoaderPriority(true);
@@ -93,12 +94,11 @@ public class ApiServer {
 		String mgrBase = webApp + File.separator + "mgr";
 		mgr = new WebAppContext(mgrBase, "/mgr");
 		mgr.setDisplayName("mgr");
-		mgr.setWelcomeFiles(new String[] { "index.html" });
+		mgr.setWelcomeFiles(welcomeFiles);
 		mgr.setDescriptor(mgrBase + "/WEB-INF/web.xml");
 		// mgr.setWar(mgrBase);
-
-		web.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "true");
-		mgr.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
+		web.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", SysConfig.isDebug + "");
+		mgr.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", SysConfig.isDebug + "");
 		HandlerCollection hc = new HandlerCollection();
 		server.setHandler(hc);
 		// ((HandlerCollection) server.getHandler()).addHandler(web);
