@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--    <meta http-equiv="refresh" content="0;url=/app/index.html"> 
+-->
+<title></title>
+</head>
+<body>
+  <div>
+    <input type="submit" value="Start" onclick="start()" />
+  </div>
+  <div id="messages"></div>
+  <script type="text/javascript">
+  var webSocket =null;
+  var lineCount=0;
+  if(window.location.protocol=="https:"){
+	  webSocket =new WebSocket('wss://'+window.location.host+'/LogsWS');
+  }else{
+	  webSocket =new WebSocket('ws://'+window.location.host+'/LogsWS');
+  }
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
+ 
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+ 
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+ 
+    function onMessage(event) {
+     lineCount++;
+     var len=document.getElementById('messages').innerHTML.length;
+     if(len>16000){
+      document.getElementById('messages').innerHTML
+        = document.getElementById('messages').innerHTML.substring(len>8000?len-8000:0,len)+ '<br />' + event.data;
+     }else{
+      document.getElementById('messages').innerHTML
+        += '<br />' + event.data;
+     }
+     window.scrollTo(0,document.body.offsetHeight);
+    }
+ 
+    function onOpen(event) {
+      document.getElementById('messages').innerHTML       = 'Connection established';
+      start(); 
+    }
+ 
+    function onError(event) {
+    	if(event && event.data)
+      alert(event.data);
+    	else
+    		alert(event);
+    }
+ 
+    function start() {
+      webSocket.send('hello');
+      return false;
+    }
+    //start(); 
+    //window.setTimeout(start,100);
+  </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+debugPort=8000
+appName=server
+APP_HEAPSIZE=
+APP_NOEXEC=
+APP_CLASSPATH=
+APP_OPTS=
+default=com.sobey.jcg.sobeyhive.deployactor.tools.
+master=com.sobey.jcg.sobeyhive.main.Start
+Usage="   "

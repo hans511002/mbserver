@@ -1,0 +1,348 @@
+#! /usr/bin/env bash
+#
+# The estorm command script.
+#
+# TODO: Narrow the amount of duplicated code.
+#
+# Environment Variables:
+#
+#   JAVA_HOME        The java implementation to use.  Overrides JAVA_HOME.
+#
+#   APP_CLASSPATH  Extra Java CLASSPATH entries.
+#
+#   APP_HEAPSIZE   The maximum amount of heap to use, in MB.
+#                    Default is 1000.
+#
+#   APP_CONF_DIR   Alternate conf dir. Default is ${APP_HOME}/conf.
+#
+#
+. /etc/bashrc
+
+bin=`dirname "${BASH_SOURCE-$0}"`
+bin=`cd "$bin">/dev/null; pwd`
+
+export APP_HOME=`cd "$bin/../"; pwd`
+
+if [ ! -e "$APP_HOME/conf/appset" ] ; then
+    echo "config error: appset not exists "
+fi
+
+printUsage(){
+  echo "Usage: $0 <command> [<args>]"
+  echo "Commands:"
+  echo "Some commands take arguments. Pass no args or -h for usage."
+  echo "$Usage"
+  echo "  classpath       Dump Run CLASSPATH"
+}
+
+# if no args specified, show usage
+if [ $# = 0 ]; then
+    printUsage
+  exit 1
+fi
+
+
+cygwin=false
+case "`uname`" in
+CYGWIN*) cygwin=true;;
+esac
+
+
+# Detect if we are in hbase sources dir
+in_dev_env=false
+if [ -d "${APP_HOME}/target" ]; then
+  in_dev_env=true
+fi
+
+
+# get arguments
+COMMAND=$1
+shift
+
+ECHO_TIP="false"
+if [ "$COMMAND" = "master" -o "$COMMAND" = "deploy" -o "$COMMAND" = "classpath" ] ; then
+  ECHO_TIP="true"
+fi
+
+ECHO_TIPS(){
+if [ "$ECHO_TIP" = "true" ] ; then
+echo "$@"
+fi
+}
+
+
+. $APP_HOME/conf/appset
+# This will set JAVA_HOME, etc.
+. "$bin"/jdk-config.sh
+
+appSetFile=$APP_HOME/conf/appset 
+JAVA=$JAVA_HOME/bin/java
+ECHO_TIPS APP_HOME=$APP_HOME
+
+APP_HEAPSIZE=${APP_HEAPSIZE:1024}
+APP_HEAPSIZE="-Xmx${APP_HEAPSIZE}m"
+
+# override default settings for this command, if applicable
+if [ -f "$APP_HOME/conf/server-env.sh" ]; then
+  . "$APP_HOME/conf/server-env.sh"
+  ECHO_TIPS load "$APP_HOME/conf/server-env.sh"
+elif [ -f "$APP_HOME/sbin/server-env.sh" ]; then
+  . "$APP_HOME/sbin/server-env.sh"
+fi
+
+ECHO_TIPS DEBUG=$DEBUG
+
+
+# so that filenames w/ spaces are handled correctly in loops below
+ORIG_IFS=$IFS
+IFS=
+
+APP_CONF_DIR=${APP_CONF_DIR:=$APP_HOME/conf}
+
+# CLASSPATH initially contains $APP_CONF_DIR
+CLASSPATH="${APP_CONF_DIR}"
+CLASSPATH=${CLASSPATH}:$JAVA_HOME/lib/tools.jar
+
+add_to_cp_if_exists() {
+  if [ -d "$@" ]; then
+    CLASSPATH=${CLASSPATH}:"$@"
+  fi
+}
+
+# For releases, add hbase & webapps to CLASSPATH
+# Webapps must come first else it messes up Jetty
+if [ -d "$APP_HOME/webapp" ]; then
+  add_to_cp_if_exists "${APP_HOME}"
+fi
+
+add_maven_deps_to_classpath() {
+  f="${APP_HOME}/target/cached_classpath.txt"
+  if [ ! -f "${f}" ]
+  then
+      echo "As this is a development environment, we need ${f} to be generated from maven (command: mvn install -DskipTests)"
+      exit 1
+  fi
+  CLASSPATH=${CLASSPATH}:`cat "${f}"`
+}
+
+
+#Add the development env class path stuff
+if $in_dev_env; then
+  add_maven_deps_to_classpath
+fi
+
+
+#add the APP jars for each module
+for f in $APP_HOME/$appName*.jar ; do
+	if [[ $f = *sources.jar ]]
+  then
+    : # Skip sources.jar
+  elif [ -f $f ]
+  then
+    CLASSPATH=${CLASSPATH}:$f;
+  fi
+done
+
+# Add libs to CLASSPATH
+
+add_classpath() {
+for f in $1/* ; do
+  if [[ $f = *.jar ]]
+  then
+    CLASSPATH=${CLASSPATH}:$f;
+  elif [ -d $f ]
+  then
+     add_classpath "$f"
+  fi
+done
+}
+
+add_classpath "$APP_HOME/lib"
+
+CLASSPATH=${CLASSPATH}:$APP_CLASSPATH
+
+# default log directory & file
+if [ "$APP_LOG_DIR" = "" ]; then
+    if [ "${LOGS_BASE}" != "" ] ; then
+        APP_LOG_DIR=${LOGS_BASE}/$appName
+    else
+        APP_LOG_DIR="$APP_HOME/logs"
+    fi 
+fi
+
+# cygwin path translation
+if $cygwin; then
+  CLASSPATH=`cygpath -p -w "$CLASSPATH"`
+  APP_HOME=`cygpath -d "$APP_HOME"`
+  APP_LOG_DIR=`cygpath -d "$APP_LOG_DIR"`
+fi
+
+function append_path() {
+  if [ -z "$1" ]; then
+    echo $2
+  else
+    echo $1:$2
+  fi
+}
+
+
+# cygwin path translation
+if $cygwin; then
+  JAVA_LIBRARY_PATH=`cygpath -p "$JAVA_LIBRARY_PATH"`
+fi
+
+# restore ordinary behaviour
+unset IFS
+
+#Set the right GC options based on the what we are running
+declare -a server_cmds=("master")
+for cmd in ${server_cmds[@]}; do
+	if [[ $cmd == $COMMAND ]]; then
+		server=true
+		break
+	fi
+done
+
+upperFirst(){
+str="$1"
+SCMD=${str:0:1}
+str=${str:1}
+echo "`echo "$SCMD" |awk -F_ '{printf("%s",toupper($1))}' `$str"
+}
+
+# MASTER_HOSTNAME 宿主机名称
+
+start_server(){
+	if [ "$COMMAND" = "-h" -o "$COMMAND" = "--help" ] ; then
+        printUsage
+        exit 0
+    elif [ "$COMMAND" = "stop" ] ; then
+        COMMAND=$1
+		className=`cat $appSetFile|grep -e "^$COMMAND="|sed -e "s|.*=||"`
+        if [ "$COMMAND" != "" -a "$className" != "" ] ; then
+            PID=`ps -ef|grep "$className"|grep java|awk '{print $2}'`
+            echo $PID 
+    	 	echo stoping $appName pid $PID
+    	 	export CLASSPATH=$CLASSPATH
+    	 	oldId=`cat $APP_CONF_DIR/server.properties | grep host.name=`
+    	 	oldId=${oldId/host\.name=/}
+    	 	oldId=${oldId/\n/}
+    	 	echo host.name=$oldId
+    	 	CLASS=$className
+    		java -Xmx512m $CLASS  -stop $oldId
+    		if kill -0 $PID > /dev/null 2>&1; then
+    			kill -2 $PID
+    		fi
+    		sleep 2
+
+     	 	export APP_STOP_TIMEOUT=120
+    	 	echo wait 120s
+    	 	logout=$APP_LOG_DIR/stop-$appName-jstack.log
+    	 	waitForProcessEnd $PID 'stop-$appName-command'
+    	 	if [ -f "$APP_LOG_DIR/$appName.pid" ] ; then
+    	 		rm -rf $APP_LOG_DIR/$appName.pid
+    	 	fi
+            return
+        fi 
+    fi
+	className=`cat $appSetFile|grep -e "^$COMMAND="|sed -e "s|.*=||"`
+	if [ "$className" = "" ] ; then
+	    UCOMMAND=`upperFirst "$COMMAND"`
+	    className=`cat $appSetFile|grep -e "^$UCOMMAND="|sed -e "s|.*=||"`
+    fi
+	if [ "$className" != "" ] ; then
+	    hostName=`hostname`
+		if [ "$MASTER_HOSTNAME" != "" ] ; then
+			hostName=$MASTER_HOSTNAME
+		fi 
+    	hostId=1
+		if [ -e "$APP_CONF_DIR/servers" ] ; then
+           	hostList=`cat $APP_CONF_DIR/servers 2>/dev/null`
+    		for host in $hostList ; do
+    			if [ "$host" == "$hostName" ] ;then
+    				break;
+    			fi
+    			((hostId++))
+    		done 
+        fi 
+
+#####mod server.properties
+		oldId=`cat $APP_CONF_DIR/server.properties | grep host.name=`
+		for hostnn in $oldId ; do
+			if [ "${hostnn:0:4}" == "host" ] ;then
+				sed -i "s/$hostnn/host\.name=$hostName/g" $APP_CONF_DIR/server.properties
+			fi
+		done
+		oldId=`cat $APP_CONF_DIR/server.properties | grep host.name=`
+		for hostnn in $oldId ; do
+			if [ "${hostnn:0:4}" == "host" ] ;then
+ 				echo $hostnn `cat $APP_CONF_DIR/server.properties | grep $appName.id=`
+ 			fi
+		done
+
+		echo `cat $APP_CONF_DIR/server.properties | grep server.cache.dir=`
+
+#####mod log4j
+        if [ "${LOGS_BASE}" != "" ] ; then
+    		sed -i "s|$appName.logs.dir=.*|$appName.logs.dir=$LOGS_BASE/$appName|g" ${APP_HOME}/conf/log4j.properties
+        else
+            oldId=`cat $APP_CONF_DIR/log4j.properties | grep $appName.logs.dir=`
+    		#echo oldId=$oldId
+    		oldId=${oldId//\//\\\/}
+    		TMP_APP_LOG_DIR=${APP_LOG_DIR//\//\\\/}
+    		#echo TMP_APP_LOG_DIR=$TMP_APP_LOG_DIR
+    		sed -i "s/$oldId/$appName\.logs\.dir=$TMP_APP_LOG_DIR/g" $APP_CONF_DIR/log4j.properties
+        fi 
+		export CLASSPATH=$CLASSPATH
+ 		CLASS=$className 
+		if [ "${APP_NOEXEC}" != "" ]; then
+		  "$JAVA" -Dproc_$COMMAND $DEBUG -XX:OnOutOfMemoryError="kill -9 %p" $JAVA_HEAP_MAX $APP_OPTS $CLASS -start "$@"
+		else
+		  exec "$JAVA" -Dproc_$COMMAND  $DEBUG -XX:OnOutOfMemoryError="kill -9 %p" $JAVA_HEAP_MAX $APP_OPTS $CLASS -start "$@"
+		fi
+    elif [ "$COMMAND" = "classpath" ] ; then
+        echo "$CLASSPATH"
+        exit 0
+	else
+        defaultPackageName=`cat $appSetFile|grep -e "^default="|sed -e "s|.*=||"`
+        if [ "$defaultPackageName" = "" ] ; then
+            echo "not set default package, $COMMAND not enable run"
+            printUsage
+            exit 1
+        fi 
+        export CLASSPATH=$CLASSPATH
+        CLASS="${defaultPackageName}${COMMAND}"
+        if [ "${APP_NOEXEC}" != "" ]; then
+		    "$JAVA" -Dproc_$COMMAND $DEBUG -XX:OnOutOfMemoryError="kill -9 %p" $JAVA_HEAP_MAX $APP_OPTS $CLASS -$STCOMMAND "$@"
+		else
+		    exec "$JAVA" -Dproc_$COMMAND  $DEBUG -XX:OnOutOfMemoryError="kill -9 %p" $JAVA_HEAP_MAX $APP_OPTS $CLASS -$STCOMMAND  "$@"
+		fi 
+	fi
+}
+waitForProcessEnd() {
+  pidKilled=$1
+  commandName=$2
+  processedAt=`date +%s`
+  while kill -0 $pidKilled > /dev/null 2>&1;
+   do
+     echo -n "."
+     sleep 1;
+     # if process persists more than $APP_STOP_TIMEOUT (default 120 sec) no mercy
+     if [ $(( `date +%s` - $processedAt )) -gt ${APP_STOP_TIMEOUT:-120} ]; then
+       break;
+     fi
+   done
+  # process still there : kill -9
+  if kill -0 $pidKilled > /dev/null 2>&1; then
+    echo -n force stopping $commandName with kill -9 $pidKilled
+    $JAVA_HOME/bin/jstack -l $pidKilled > "$logout" 2>&1
+    kill -9 $pidKilled > /dev/null 2>&1
+  fi
+  # Add a CR after we're done w/ dots.
+  echo
+}
+
+start_server "$@"
+exit 0 ;
+   
+ 

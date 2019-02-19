@@ -376,7 +376,14 @@
             <artifactId>DbSupport</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/rdbms/DbSupport-1.0.0.jar</systemPath>
+            <systemPath>${project.basedir}/lib/rdbms/DbSupport-1.0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>druid</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.29</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/rdbms/druid-1.0.29.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ftpTool</groupId>
@@ -391,13 +398,6 @@
             <version>1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/common/edtftpj-pro.jar</systemPath>
-        </dependency> 
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/rdbms/ojdbc6.jar</systemPath>
         </dependency> 
 		<dependency>
 		    <groupId>org.glassfish.jersey.core</groupId>

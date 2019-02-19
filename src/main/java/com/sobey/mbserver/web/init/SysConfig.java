@@ -143,7 +143,7 @@ public class SysConfig extends SystemVariable {
 		String delFiles = conf.getProperty(Constant.DEPLOY_SYSTEM_WEB_DELFILES_KEY);
 		String res[] = null;
 		if (delFiles == null || delFiles.trim().isEmpty()) {
-			delFiles = "app,i18n,index.html,install.log,scripts";
+			delFiles = "";
 		}
 		res = delFiles.split(",");
 		conf.setProperty(Constant.DEPLOY_SYSTEM_WEB_DELFILES_KEY, delFiles + "");

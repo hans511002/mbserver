@@ -12,4 +12,4 @@ systemctl stop firewalld
 service firewalld stop
 chmod +x -R $bin 
 
-$bin/sbin/installer master start $@
+$bin/sbin/server start $@

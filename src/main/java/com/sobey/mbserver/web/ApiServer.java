@@ -14,17 +14,22 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.sobey.jcg.sobeyhive.main.DaemonMaster;
 import com.sobey.jcg.support.log4j.LogUtils;
-import com.sobey.mbserver.util.ToolUtil;
+import com.sobey.mbserver.mgr.api.MgrServletContainer;
+import com.sobey.mbserver.mgr.servlet.ZkctlServlet;
 import com.sobey.mbserver.web.init.SysConfig;
 
 public class ApiServer {
 
-	private DaemonMaster daemonMaster;
+	private DaemonMaster master;
 	private Server server;
 	private boolean started;
 	public boolean runned = false;
@@ -32,12 +37,12 @@ public class ApiServer {
 	WebAppContext mgr;
 	public static String webApp;
 
-	public ApiServer(DaemonMaster daemonMaster) throws IOException {
-		this.daemonMaster = daemonMaster;
+	public ApiServer(DaemonMaster master) throws IOException {
+		this.master = master;
 		this.server = new Server();
 		HttpConfiguration http_config = new HttpConfiguration();
 		http_config.setSecureScheme("https");
-		ServerConnector httpConnector = new ServerConnector(server, 100, 10);
+		ServerConnector httpConnector = new ServerConnector(server, 10, 10);
 		httpConnector.setPort(SysConfig.getUiPort());
 		server.addConnector(httpConnector);
 
@@ -75,30 +80,36 @@ public class ApiServer {
 				webApp = home + File.separator + "tmp" + File.separator + "webapp";
 			}
 		}
-		String appBase = webApp + File.separator + "app";
-		web = new WebAppContext();
-		web.setResourceBase(webApp);
-		web.setContextPath("/");
+		String webBase = webApp + File.separator + "web";
+		web = new WebAppContext(webBase, "/web");
+		web.setDisplayName("web");
+		web.setContextPath("/web");
 		web.setWelcomeFiles(new String[] { "index.html", "deployLog.html", "installLog.html" });
-		web.setDescriptor(webApp + "/WEB-INF/web.xml");
-		web.setWar(webApp);
+		web.setDescriptor("WEB-INF/web.xml");
+		// web.setWar(webBase);
 		web.setParentLoaderPriority(true);
+		web.setAllowNullPathInfo(true);
+
 		String mgrBase = webApp + File.separator + "mgr";
 		mgr = new WebAppContext(mgrBase, "/mgr");
-		mgr.setResourceBase(mgrBase);
-		mgr.setWelcomeFiles(new String[] {});
+		mgr.setDisplayName("mgr");
+		mgr.setWelcomeFiles(new String[] { "index.html" });
 		mgr.setDescriptor(mgrBase + "/WEB-INF/web.xml");
-		mgr.setWar(mgrBase);
+		// mgr.setWar(mgrBase);
 
+		web.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "true");
+		mgr.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
 		HandlerCollection hc = new HandlerCollection();
-		hc.addHandler(mgr);
+		server.setHandler(hc);
+		// ((HandlerCollection) server.getHandler()).addHandler(web);
 		hc.addHandler(web);
-		web.setTempDirectory(new File(SysConfig.getTempDir() + File.separator + "mgr"));
+		hc.addHandler(mgr);
+		web.setTempDirectory(new File(SysConfig.getTempDir() + File.separator + "web"));
 		mgr.setTempDirectory(new File(SysConfig.getTempDir() + File.separator + "mgr"));
+
 		// mgr.setAttribute("org.eclipse.jetty.webapp.basetempdir", SysConfig.getTempDir());
 		// mgr.setAttribute("javax.servlet.context.tempdir", SysConfig.getTempDir() + File.separator + "mgr");
 		// mgr.setPersistTempDirectory(true);
-		server.setHandler(hc);
 
 		if (SysConfig.getHttpsPort() > 0 && new File(SysConfig.getInstallHome() + File.separator + "crt" + File.separator + "keystore").exists()) {
 			HttpConfiguration https_config = new HttpConfiguration();
@@ -123,14 +134,13 @@ public class ApiServer {
 			httpsConnector.setIdleTimeout(30000);
 			server.addConnector(httpsConnector);
 		}
-		initServlets();
 	}
 
 	public void start() {
 		Thread thr = new Thread(new Runnable() {
-
 			public void run() {
 				try {
+					initServlets();
 					server.start();
 					LogUtils.info("UI[http://" + SysConfig.getHostName() + ":" + SysConfig.getUiPort() + "]启动 OK!");
 					started = true;
@@ -151,19 +161,19 @@ public class ApiServer {
 	public void closeDefaultWebPages() {
 		String appFile = webApp + File.separator + "app";
 		if (new File(appFile).exists()) {
-			String delFiles[] = SysConfig.getWebAppsDelFiles();
-			for (String string : delFiles) {
-				appFile = webApp + File.separator + string;
-				File f = new File(appFile);
-				if (f.exists()) {
-					try {
-						Process proc = ToolUtil.runProcess("rm -rf " + appFile);
-						int res = proc.waitFor();
-						LogUtils.info("删除安装界面文件：" + appFile + " res=" + res);
-					} catch (IOException | InterruptedException e) {
-					}
-				}
-			}
+			// String delFiles[] = SysConfig.getWebAppsDelFiles();
+			// for (String string : delFiles) {
+			// appFile = webApp + File.separator + string;
+			// File f = new File(appFile);
+			// if (f.exists()) {
+			// try {
+			// Process proc = ToolUtil.runProcess("rm -rf " + appFile);
+			// int res = proc.waitFor();
+			// LogUtils.info("删除安装界面文件：" + appFile + " res=" + res);
+			// } catch (IOException | InterruptedException e) {
+			// }
+			// }
+			// }
 		}
 	}
 
@@ -185,8 +195,16 @@ public class ApiServer {
 	private void initServlets() throws IOException {
 		// web.addServlet(new ServletHolder(new ZkctlServlet(daemonMaster, "/zkctl/")), "/zkctl/*");
 		web.addServlet(DeployWebSocketServer.class, "/deploy/LogsWS");
-		ServiceReqHandler.addMasterPath("/deploy/");
-		// ServiceReqHandler.addMasterPath("/metrics/");
+		// ServiceReqHandler.addMasterPath("/deploy/");
+		ResourceConfig configuration = new ResourceConfig(MyObjectMapperProvider.class, JacksonFeature.class);
+		configuration.packages("com.sobey.mbserver.web.api");
+		ServletHolder sh = new ServletHolder(new ServletContainer(configuration));
+		// sh.setInitParameter("jersey.config.server.provider.packages", "com.sobey.mbserver");
+		web.addServlet(sh, "/api/*");
+
+		mgr.addServlet(new ServletHolder(new ZkctlServlet("/zkctl/")), "/zkctl/*");
+		// mgr.addServlet(ZkctlServlet.getCLass("/zkctl/"), "/zkctl/*");
+		mgr.addServlet(MgrServletContainer.class, "/api/*");
 	}
 
 	public boolean isStarted() {

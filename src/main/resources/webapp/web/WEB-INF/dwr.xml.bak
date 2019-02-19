@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+<!-- xmlns="http://directwebremoting.org/schema/dwr20" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://directwebremoting.org/schema/dwr20 ../META-INF/dwr20.xsd " -->
+    <init>
+        <creator id="db" class="com.sobey.jcg.support.dwr.DBCreator"/>
+        <converter id="nestedMap" class="com.sobey.jcg.support.dwr.NestedMapConverter"/>
+        <converter id="nestedCollection" class="com.sobey.jcg.support.dwr.NestedCollectionConverter"/>
+    </init>
+    
+    <allow>
+        <create creator="db" javascript="ZKAction">
+            <param name="class" value="com.sobey.jcg.sobeyhive.install.web.ZKAction"/>
+        </create>
+        
+        <!--容器类转换器-->
+        <convert converter="nestedCollection" match="java.util.Collection"/>
+        <convert converter="nestedMap" match="java.util.Map"/>
+
+        <!--异常处理 -->
+        <convert converter="bean" match="java.lang.StackTraceElement" />  
+        <convert converter="exception" match="java.lang.Throwable"/>
+        
+    </allow>
+    
+      <signatures>
+  <![CDATA[
+  import java.util.*;
+  import com.bi.view.*;
+  import java.util.Hashtable;
+  ]]>
+  <!--  DrillReport.testDwr(List<Hashtable<String, Hashtable<String, String[]>[]>>> );  -->
+  </signatures> 
+</dwr>
