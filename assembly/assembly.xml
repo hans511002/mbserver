@@ -21,12 +21,18 @@
     </fileSet>
     <fileSet>
       <directory>lib/common</directory>
-      <includes><include>ftpTool.jar</include></includes>
+      <includes>
+      <include>ftpTool.jar</include>
+      <include>edtftpj-pro.jar</include>
+      </includes>
       <outputDirectory>/lib/common</outputDirectory>
     </fileSet> 
     <fileSet>
       <directory>lib/rdbms</directory>
-      <includes><include>DbSupport-1.0.0.jar</include></includes>
+      <includes>
+      <include>DbSupport-1.0.1.jar</include>
+      <include>druid-1.0.29.jar</include>
+      </includes>
       <outputDirectory>/lib/common</outputDirectory>
     </fileSet>
     <fileSet>

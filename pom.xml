@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion> 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sobey.jcg</groupId>
-	<artifactId>mb-server</artifactId>
+	<artifactId>mbserver</artifactId>
 	<version>1.0.0</version>
-	    <!-- 打包的机制，如pom,jar, maven-plugin, ejb, war, ear, rar, par，默认为jar -->  
+	<!-- 打包的机制，如pom,jar, maven-plugin, ejb, war, ear, rar, par，默认为jar -->
 	<packaging>jar</packaging>
-	<name>mbServer</name>
- 	<url></url>
+	<name>mbserver</name>
+	<url></url>
 	<inceptionYear>2019</inceptionYear>
- 	<properties>
- 		<argLine>-Dfile.encoding=UTF-8</argLine>
- 		<junit.version>4.11</junit.version>
- 		<gpg.skip>true</gpg.skip>
+	<properties>
+		<jersey.version>2.28</jersey.version>
+		<argLine>-Dfile.encoding=UTF-8</argLine>
+		<junit.version>4.11</junit.version>
+		<gpg.skip>true</gpg.skip>
 		<javadoc.skip>true</javadoc.skip>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.8</jdk.version>
 		<finalName>mbserver-${version}</finalName>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>  
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 	</properties>
 	<repositories>
-	   <repository>
-            <id>apachemaven2</id>
-            <url>http://repo.maven.apache.org/maven2/</url>
-            <layout>*</layout>
-        </repository>
-        <repository>
-            <id>maven2</id>
-            <url>http://repo1.maven.org/maven2/</url>
-            <layout>*</layout>
-        </repository>
 		<repository>
-			<id>local-file</id>
-			<url>file://${basedir}/lib/</url>
+			<id>localfile</id>
+			<url>file://${project.basedir}/lib/</url>
 			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>apachemaven2</id>
+			<url>http://repo.maven.apache.org/maven2/</url>
+			<layout>*</layout>
+		</repository>
+		<repository>
+			<id>maven2</id>
+			<url>http://repo1.maven.org/maven2/</url>
+			<layout>*</layout>
 		</repository>
 		<repository>
 			<id>boundlessgeo</id>
@@ -51,7 +51,7 @@
 			<name>hans</name>
 			<email>zouyuangui@sobey.com</email>
 		</developer>
-	</developers> 
+	</developers>
 
 	<profiles>
 		<profile>
@@ -69,302 +69,201 @@
 		</profile>
 	</profiles>
 
-    <build>
-        <outputDirectory>target</outputDirectory>
-        <plugins> 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>${jdk.version}</source>
-                    <target>${jdk.version}</target>
-                    <meminitial>128m</meminitial>
-                    <maxmem>512m</maxmem>
-                    <fork>true</fork> 
-                    <compilerVersion>${jdk.version}</compilerVersion>
-                    <!-- 这个选项用来传递编译器自身不包含但是却支持的参数选项--> 
-                     <compilerArgs> 
-                     <!--   <arg>-verbose</arg>
-                        <arg>-Xlint:unchecked</arg>
-                        <arg>-Xlint:deprecation</arg>-->
-                        <arg>-bootclasspath</arg>
-                        <arg>${env.JAVA_HOME}/jre/lib/rt.jar</arg>
-                        <arg>-extdirs</arg> 
-                        <arg>${project.basedir}/lib/rdbms:${project.basedir}/lib/common:${project.basedir}/lib/jetty</arg>
-                    </compilerArgs>
-                </configuration>
-                <executions>  
-                  <execution>  
-                      <id>default-compile</id>  
-                      <phase>compile</phase>  
-                      <goals>  
-                          <goal>compile</goal>  
-                      </goals>  
-                      <configuration>  
-                          <encoding>UTF-8</encoding>  
-                      </configuration>  
-                  </execution>  
-              </executions>  
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <attach>true</attach>
-                </configuration>
-            </plugin>
+	<build>
+		<outputDirectory>target</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+					<fork>true</fork>
+					<compilerVersion>${jdk.version}</compilerVersion>
+					<!-- 这个选项用来传递编译器自身不包含但是却支持的参数选项 -->
+					<compilerArgs>
+						<!-- <arg>-verbose</arg> <arg>-Xlint:unchecked</arg> <arg>-Xlint:deprecation</arg> -->
+						<arg>-bootclasspath</arg>
+						<arg>${env.JAVA_HOME}/jre/lib/rt.jar</arg>
+						<arg>-extdirs</arg>
+						<arg>${project.basedir}/lib/rdbms:${project.basedir}/lib/common:${project.basedir}/lib/jetty</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+						<configuration>
+						<finalName>${finalName}</finalName>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<attach>true</attach>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadoc</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>${javadoc.skip}</skip>
-                    <show>public</show>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                </configuration>
-            </plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>attach-javadoc</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<skip>${javadoc.skip}</skip>
+					<show>public</show>
+					<charset>UTF-8</charset>
+					<encoding>UTF-8</encoding>
+					<docencoding>UTF-8</docencoding>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.4</version>
-                <configuration>
-                    <skip>${gpg.skip}</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <finalName>${finalName}</finalName>
-                     <excludes>
-                        <exclude>generated-sources</exclude>
-                        <exclude>maven-archiver</exclude>
-                        <exclude>maven-status</exclude>
-                    </excludes>
-                    <archive>
-                        <manifest>
-                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                        </manifest>
-                        <manifestEntries>
-                            <Implementation-Build>${buildNumber}</Implementation-Build>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>  
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
-                <configuration>
-                  <descriptors>
-                    <descriptor>assembly/assembly.xml</descriptor>
-                  </descriptors>
-                    <finalName>${finalName}</finalName>
-                </configuration>
-                <executions>
-                  <execution>
-                    <id>make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                      <goal>single</goal>
-                    </goals>
-                    
-                    <configuration>
-                    
-                    </configuration>
-                  </execution>
-                </executions>
-          </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-               <executions>
-                <execution>
-                    <id>copy-bin</id>
-                    <phase>package</phase>
-                    <configuration>
-                        <tasks>
-                           <!-- <delete dir="src/main/webapp/WEB-INF/lib" />-->
-                            <copy todir="./">
-                                <fileset dir="target">
-                                    <include name="*.tar.gz" />
-                                    <include name="*.jar" />
-                                </fileset>
-                            </copy>
-                            <delete dir="target" />  
-                        </tasks>
-                    </configuration>
-                    <goals>
-                        <goal>run</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        <!-- 
-            <plugin>
-                   <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>rpm-maven-plugin</artifactId>
-                    <version>2.1.4</version>
-                <executions>
-                    <execution>
-                    <id>make-rpm</id>
-                    <phase>install</phase>
-                        <goals>
-                          <goal>rpm</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <copyright>2015, sobey</copyright>
-                    <distribution>Trash 2015</distribution>
-                    <group>Application/Collectors</group>
-                    <icon></icon>
-                    <packager>hans</packager>
-                    <prefix>/usr/local</prefix>
-                    <changelogFile></changelogFile>
-                    <defineStatements>
-                       <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
-                    </defineStatements>
-                    <mappings>
-                        <mapping>
-                            <directory>/usr/local/bin/landfill</directory>
-                            <filemode>440</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <sources>
-                                <source>
-                                    <location>target/classes</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/doc/landfill</directory>
-                            <documentation>true</documentation>
-                            <filemode>444</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <sources>
-                                <source>
-                                    <location>target/site</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/lib</directory>
-                            <filemode>750</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <dependency>
-                                <includes>
-                                    <include>jmock:jmock</include>
-                                    <include>javax.servlet:servlet-api:2.4</include>
-                                </includes>
-                                <excludes>
-                                    <exclude>junit:junit</exclude>
-                                </excludes>
-                            </dependency>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/bin</directory>
-                            <filemode>750</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <sources>
-                                <source>
-                                    <location>src/main/bin</location>
-                                </source>
-                                <softlinkSource>
-                                    <location>/usr/local/bin/new.sh</location>
-                                    <destination>old.sh</destination>
-                                </softlinkSource>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/oldbin</directory>
-                            <filemode>750</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <sources>
-                                <softlinkSource>
-                                    <location>/usr/local/bin</location>
-                                </softlinkSource>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/conf/landfill</directory>
-                            <configuration>true</configuration>
-                            <filemode>640</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                            <sources>
-                                <source>
-                                    <location>src/main/conf</location>
-                                </source>
-                            </sources>
-                        </mapping>
-                        <mapping>
-                            <directory>/usr/local/log/landfill</directory>
-                            <filemode>750</filemode>
-                            <username>dumper</username>
-                            <groupname>dumpgroup</groupname>
-                        </mapping>
-                    </mappings>
-                    <preinstallScriptlet>  
-                        <scriptFile>rpm/preInstall.sh</scriptFile>  
-                        <fileEncoding>utf-8</fileEncoding>  
-                    </preinstallScriptlet>    
-                     <postinstallScriptlet>
-                        <scriptFile>rpm/postinstall</scriptFile>
-                        <fileEncoding>utf-8</fileEncoding>
-                    </postinstallScriptlet>
-                    <preremoveScriptlet>
-                        <scriptFile>rpm/preremove</scriptFile>
-                        <fileEncoding>utf-8</fileEncoding>
-                    </preremoveScriptlet>
-                    <postremoveScriptlet>  
-                            <scriptFile>rpm/postRemove.sh</scriptFile>  
-                            <fileEncoding>utf-8</fileEncoding>  
-                    </postremoveScriptlet> 
-                </configuration>
- 
-            </plugin>
-             -->
-        </plugins>
-    </build>
-    
-    
+			<plugin>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.4</version>
+				<configuration>
+					<skip>${gpg.skip}</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<finalName>${finalName}</finalName>
+					<excludes>
+						<exclude>generated-sources</exclude>
+						<exclude>maven-archiver</exclude>
+						<exclude>maven-status</exclude>
+					</excludes>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly/assembly.xml</descriptor>
+					</descriptors>
+					<finalName>${finalName}</finalName>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-bin</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks> 
+								<copy todir="./">
+									<fileset dir="target">
+										<include name="${finalName}*.tar.gz" />
+										<include name="${finalName}*.jar" />
+									</fileset>
+								</copy>
+								<delete >
+								    <fileset dir="target">
+                                        <include name="${finalName}*.tar.gz" />
+                                        <include name="${finalName}*.jar" />
+                                    </fileset>
+								</delete>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>rpm-maven-plugin</artifactId> 
+				<version>2.1.4</version> <executions> <execution> <id>make-rpm</id> <phase>install</phase> 
+				<goals> <goal>rpm</goal> </goals> </execution> </executions> <configuration> 
+				<copyright>2015, sobey</copyright> <distribution>Trash 2015</distribution> 
+				<group>Application/Collectors</group> <icon></icon> <packager>hans</packager> 
+				<prefix>/usr/local</prefix> <changelogFile></changelogFile> <defineStatements> 
+				<defineStatement>_unpackaged_files_terminate_build 0</defineStatement> </defineStatements> 
+				<mappings> <mapping> <directory>/usr/local/bin/landfill</directory> <filemode>440</filemode> 
+				<username>dumper</username> <groupname>dumpgroup</groupname> <sources> <source> 
+				<location>target/classes</location> </source> </sources> </mapping> <mapping> 
+				<directory>/usr/local/doc/landfill</directory> <documentation>true</documentation> 
+				<filemode>444</filemode> <username>dumper</username> <groupname>dumpgroup</groupname> 
+				<sources> <source> <location>target/site</location> </source> </sources> 
+				</mapping> <mapping> <directory>/usr/local/lib</directory> <filemode>750</filemode> 
+				<username>dumper</username> <groupname>dumpgroup</groupname> <dependency> 
+				<includes> <include>jmock:jmock</include> <include>javax.servlet:servlet-api:2.4</include> 
+				</includes> <excludes> <exclude>junit:junit</exclude> </excludes> </dependency> 
+				</mapping> <mapping> <directory>/usr/local/bin</directory> <filemode>750</filemode> 
+				<username>dumper</username> <groupname>dumpgroup</groupname> <sources> <source> 
+				<location>src/main/bin</location> </source> <softlinkSource> <location>/usr/local/bin/new.sh</location> 
+				<destination>old.sh</destination> </softlinkSource> </sources> </mapping> 
+				<mapping> <directory>/usr/local/oldbin</directory> <filemode>750</filemode> 
+				<username>dumper</username> <groupname>dumpgroup</groupname> <sources> <softlinkSource> 
+				<location>/usr/local/bin</location> </softlinkSource> </sources> </mapping> 
+				<mapping> <directory>/usr/local/conf/landfill</directory> <configuration>true</configuration> 
+				<filemode>640</filemode> <username>dumper</username> <groupname>dumpgroup</groupname> 
+				<sources> <source> <location>src/main/conf</location> </source> </sources> 
+				</mapping> <mapping> <directory>/usr/local/log/landfill</directory> <filemode>750</filemode> 
+				<username>dumper</username> <groupname>dumpgroup</groupname> </mapping> </mappings> 
+				<preinstallScriptlet> <scriptFile>rpm/preInstall.sh</scriptFile> <fileEncoding>utf-8</fileEncoding> 
+				</preinstallScriptlet> <postinstallScriptlet> <scriptFile>rpm/postinstall</scriptFile> 
+				<fileEncoding>utf-8</fileEncoding> </postinstallScriptlet> <preremoveScriptlet> 
+				<scriptFile>rpm/preremove</scriptFile> <fileEncoding>utf-8</fileEncoding> 
+				</preremoveScriptlet> <postremoveScriptlet> <scriptFile>rpm/postRemove.sh</scriptFile> 
+				<fileEncoding>utf-8</fileEncoding> </postremoveScriptlet> </configuration> 
+				</plugin> -->
+		</plugins>
+	</build>
+
+
 	<dependencies>
-	   <dependency>
+	 <dependency>
             <groupId>com.sun</groupId>
             <artifactId>tools</artifactId>
             <version>1</version>
@@ -374,16 +273,9 @@
         <dependency>
             <groupId>DbSupport</groupId>
             <artifactId>DbSupport</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/rdbms/DbSupport-1.0.1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>druid</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.29</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/rdbms/druid-1.0.29.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>ftpTool</groupId>
@@ -393,216 +285,228 @@
             <systemPath>${project.basedir}/lib/common/ftpTool.jar</systemPath>
         </dependency> 
         <dependency>
-            <groupId>edtftpj</groupId>
+            <groupId>edtftpj-pro</groupId>
             <artifactId>edtftpj-pro</artifactId>
             <version>1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/common/edtftpj-pro.jar</systemPath>
         </dependency> 
-		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-server</artifactId>
-		    <version>2.28</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->
 		<dependency>
-		    <groupId>org.glassfish.jersey.core</groupId>
-		    <artifactId>jersey-common</artifactId>
-		    <version>2.28</version>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>${jersey.version}</version>
 		</dependency>
-	  <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-            <version>2.28</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-servlet</artifactId>
-            <version>2.28</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
-                  <version>2.28</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.28</version>
-        </dependency>   
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-            <version>4.0.2</version>
-        </dependency>  
-    
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-grizzly2-http</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-grizzly2-servlet</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.fge</groupId>
+			<artifactId>json-patch</artifactId>
+			<version>1.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-moxy</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-processing</artifactId>
+			<version>${jersey.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
 		<dependency>
-		    <groupId>commons-net</groupId>
-		    <artifactId>commons-net</artifactId>
-		    <version>3.6</version>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-math3</artifactId>
-		    <version>3.6.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
 		<dependency>
-		    <groupId>org.dom4j</groupId>
-		    <artifactId>dom4j</artifactId>
-		    <version>2.1.1</version>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>2.1.1</version>
 		</dependency>
-	   <!-- https://mvnrepository.com/artifact/org.apache.ws.xmlschema/xmlschema-core -->
+		<!-- https://mvnrepository.com/artifact/org.apache.ws.xmlschema/xmlschema-core -->
 		<dependency>
-		    <groupId>org.apache.ws.xmlschema</groupId>
-		    <artifactId>xmlschema-core</artifactId>
-		    <version>2.2.4</version>
+			<groupId>org.apache.ws.xmlschema</groupId>
+			<artifactId>xmlschema-core</artifactId>
+			<version>2.2.4</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>27.0-jre</version>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>27.0-jre</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
 		<dependency>
-		    <groupId>org.apache.ant</groupId>
-		    <artifactId>ant</artifactId>
-		    <version>1.10.5</version>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.10.5</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient</artifactId>
-		    <version>4.5.7</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.7</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient-cache -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient-cache</artifactId>
-		    <version>4.5.7</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient-cache</artifactId>
+			<version>4.5.7</version>
 		</dependency>
-			
+
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpmime -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpmime</artifactId>
-		    <version>4.5.7</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.5.7</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpcore</artifactId>
-		    <version>4.4.11</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.11</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpasyncclient -->
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpasyncclient</artifactId>
-		    <version>4.1.4</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpasyncclient</artifactId>
+			<version>4.1.4</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.thrift/libthrift -->
+		<!-- https://mvnrepository.com/artifact/org.apache.thrift/libthrift -->
 		<dependency>
-		    <groupId>org.apache.thrift</groupId>
-		    <artifactId>libthrift</artifactId>
-		    <version>0.12.0</version>
+			<groupId>org.apache.thrift</groupId>
+			<artifactId>libthrift</artifactId>
+			<version>0.12.0</version>
 		</dependency>
-	   <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-all -->
+		<!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-all -->
 		<dependency>
-		    <groupId>org.ow2.asm</groupId>
-		    <artifactId>asm-all</artifactId>
-		    <version>5.2</version>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-all</artifactId>
+			<version>5.2</version>
 		</dependency>
-						
+
 		<dependency>
-		    <groupId>org.directwebremoting</groupId>
-		    <artifactId>dwr</artifactId>
-		    <version>3.0.2-RELEASE</version>
-		  </dependency>
-		 
+			<groupId>org.directwebremoting</groupId>
+			<artifactId>dwr</artifactId>
+			<version>3.0.2-RELEASE</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <version>4.0.1</version>
-		    <scope>provided</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
 		</dependency>
-		 <!-- https://mvnrepository.com/artifact/net.contentobjects.jnotify/jnotify -->
+		<!-- https://mvnrepository.com/artifact/net.contentobjects.jnotify/jnotify -->
 		<dependency>
-		    <groupId>net.contentobjects.jnotify</groupId>
-		    <artifactId>jnotify</artifactId>
-		    <version>0.94</version>
+			<groupId>net.contentobjects.jnotify</groupId>
+			<artifactId>jnotify</artifactId>
+			<version>0.94</version>
 		</dependency>
-		 <!-- https://mvnrepository.com/artifact/net.sf.jpathwatch/jpathwatch -->
+		<!-- https://mvnrepository.com/artifact/net.sf.jpathwatch/jpathwatch -->
 		<dependency>
-		    <groupId>net.sf.jpathwatch</groupId>
-		    <artifactId>jpathwatch</artifactId>
-		    <version>0.95</version>
+			<groupId>net.sf.jpathwatch</groupId>
+			<artifactId>jpathwatch</artifactId>
+			<version>0.95</version>
 		</dependency>
-		 
+
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-api</artifactId>
-		    <version>1.7.25</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-log4j12</artifactId>
-		    <version>1.7.25</version>
-		    <scope>test</scope>
-		</dependency> 
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.25</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
 		<dependency>
-		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-core</artifactId>
-		    <version>2.11.2</version>
-		</dependency> 
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.2</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.11.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.47</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.11.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.47</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 		<dependency>
-		    <groupId>junit</groupId>
-		    <artifactId>junit</artifactId>
-		    <version>4.12</version>
-		    <scope>test</scope>
-		</dependency>  
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.8</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.8</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-annotations</artifactId>
-		    <version>2.9.8</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.8</version>
 		</dependency>
-		 <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-core</artifactId>
-		    <version>2.9.8</version>
-		</dependency> 
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.8</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
-		    <groupId>commons-cli</groupId>
-		    <artifactId>commons-cli</artifactId>
-		    <version>1.4</version>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-codec</groupId>
@@ -616,114 +520,114 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-configuration2 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-configuration2</artifactId>
-		    <version>2.4</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-configuration2</artifactId>
+			<version>2.4</version>
 		</dependency>
-		 <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.8.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.aviator/aviator -->
 		<dependency>
-		    <groupId>com.googlecode.aviator</groupId>
-		    <artifactId>aviator</artifactId>
-		    <version>4.1.2</version>
+			<groupId>com.googlecode.aviator</groupId>
+			<artifactId>aviator</artifactId>
+			<version>4.1.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
 		<dependency>
-		    <groupId>com.jcraft</groupId>
-		    <artifactId>jsch</artifactId>
-		    <version>0.1.55</version>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.55</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
-		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
-		    <version>4.0.1</version>
-		    <scope>provided</scope>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
 		<dependency>
-		    <groupId>com.101tec</groupId>
-		    <artifactId>zkclient</artifactId>
-		    <version>0.11</version>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.11</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
 		<dependency>
-		    <groupId>org.apache.zookeeper</groupId>
-		    <artifactId>zookeeper</artifactId>
-		    <version>3.4.13</version>
-		    <type>pom</type>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.13</version>
+			<type>pom</type>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
 		<dependency>
-		    <groupId>io.netty</groupId>
-		    <artifactId>netty-all</artifactId>
-		    <version>5.0.0.Alpha2</version>
-		</dependency>  
-		
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>5.0.0.Alpha2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-server</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-http</artifactId>
-            <version>9.4.14.v20181114</version>
-        </dependency> 
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>9.4.14.v20181114</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-servlet</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-http</artifactId>
+			<version>9.4.14.v20181114</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>9.4.14.v20181114</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-util -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-util</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-util</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlets -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-servlets</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-io -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-io</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-io</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-security -->
 		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-security</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-security</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
-		       
+
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty.websocket/websocket-client -->
 		<dependency>
-		    <groupId>org.eclipse.jetty.websocket</groupId>
-		    <artifactId>websocket-client</artifactId>
-		    <version>9.4.14.v20181114</version>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>websocket-client</artifactId>
+			<version>9.4.14.v20181114</version>
 		</dependency>
-	   <dependency>
-            <groupId>org.eclipse.jetty.websocket</groupId>
-            <artifactId>websocket-server</artifactId>
-            <version>9.4.14.v20181114</version>
-        </dependency>
-        
+		<dependency>
+			<groupId>org.eclipse.jetty.websocket</groupId>
+			<artifactId>websocket-server</artifactId>
+			<version>9.4.14.v20181114</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-api</artifactId>
