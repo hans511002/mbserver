@@ -8,6 +8,8 @@ import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import javax.json.stream.JsonGenerator;
+
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -18,12 +20,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.sobey.jcg.sobeyhive.main.DaemonMaster;
 import com.sobey.jcg.support.log4j.LogUtils;
-import com.sobey.mbserver.mgr.api.MgrServletContainer;
 import com.sobey.mbserver.mgr.servlet.ZkctlServlet;
 import com.sobey.mbserver.web.init.SysConfig;
 
@@ -42,7 +44,7 @@ public class ApiServer {
 		this.server = new Server();
 		HttpConfiguration http_config = new HttpConfiguration();
 		http_config.setSecureScheme("https");
-		ServerConnector httpConnector = new ServerConnector(server, 10, 10);
+		ServerConnector httpConnector = new ServerConnector(server);// , 10, 10
 		httpConnector.setPort(SysConfig.getUiPort());
 		server.addConnector(httpConnector);
 
@@ -107,6 +109,12 @@ public class ApiServer {
 		web.setTempDirectory(new File(SysConfig.getTempDir() + File.separator + "web"));
 		mgr.setTempDirectory(new File(SysConfig.getTempDir() + File.separator + "mgr"));
 
+		// //filter
+		// FilterHolder fh = new FilterHolder();
+		// // fg.setInitParameter(param, value);
+		// fh.setAsyncSupported(true);
+		// web.addFilter(fh, "/*", null);
+
 		// mgr.setAttribute("org.eclipse.jetty.webapp.basetempdir", SysConfig.getTempDir());
 		// mgr.setAttribute("javax.servlet.context.tempdir", SysConfig.getTempDir() + File.separator + "mgr");
 		// mgr.setPersistTempDirectory(true);
@@ -127,8 +135,8 @@ public class ApiServer {
 			sslContextFactory.setKeyStorePath("crt" + File.separator + "keystore");
 			sslContextFactory.setKeyStorePassword("OBF:1vv11yew1ta01toc20zj1toi1tae1yfa1vu9");// 私钥
 			sslContextFactory.setKeyManagerPassword("OBF:1vv11yew1ta01toc20zj1toi1tae1yfa1vu9");// 公钥
-			ServerConnector httpsConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"), new HttpConnectionFactory(
-			        https_config));
+			ServerConnector httpsConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, "http/1.1"),
+			        new HttpConnectionFactory(https_config));
 			// 设置访问端口
 			httpsConnector.setPort(SysConfig.getHttpsPort());
 			httpsConnector.setIdleTimeout(30000);
@@ -142,7 +150,7 @@ public class ApiServer {
 				try {
 					initServlets();
 					server.start();
-					LogUtils.info("UI[http://" + SysConfig.getHostName() + ":" + SysConfig.getUiPort() + "]启动 OK!");
+					LogUtils.info("UI[http://" + SysConfig.getHostName() + ":" + SysConfig.getUiPort() + "]start OK!");
 					started = true;
 					// server.join();
 					runned = true;
@@ -193,18 +201,31 @@ public class ApiServer {
 	}
 
 	private void initServlets() throws IOException {
-		// web.addServlet(new ServletHolder(new ZkctlServlet(daemonMaster, "/zkctl/")), "/zkctl/*");
-		web.addServlet(DeployWebSocketServer.class, "/deploy/LogsWS");
 		// ServiceReqHandler.addMasterPath("/deploy/");
-		ResourceConfig configuration = new ResourceConfig(MyObjectMapperProvider.class, JacksonFeature.class);
-		configuration.packages("com.sobey.mbserver.web.api");
-		ServletHolder sh = new ServletHolder(new ServletContainer(configuration));
-		// sh.setInitParameter("jersey.config.server.provider.packages", "com.sobey.mbserver");
-		web.addServlet(sh, "/api/*");
+		ResourceConfig webConf = new ResourceConfig();
+		webConf.register(JacksonJsonProvider.class, JacksonFeature.class);
+		// webConf.register(MyObjectMapperProvider.class, JacksonFeature.class);
+		webConf.packages("com.sobey.mbserver.web.api", "org.glassfish.jersey.examples");
+		webConf.property(JsonGenerator.PRETTY_PRINTING, true);
+		ServletHolder webApiServHolder = new ServletHolder(new ServletContainer(webConf));
+		web.addServlet(webApiServHolder, "/api/*");
+
+		web.addServlet(DeployWebSocketServer.class, "/deploy/LogsWS");
+		// web.addServlet(new ServletHolder(new ZkctlServlet("/zkctl/")), "/zkctl/*");
+
+		ResourceConfig mgrConf = new ResourceConfig();
+		mgrConf.register(JacksonJsonProvider.class, JacksonFeature.class);
+		mgrConf.packages("com.sobey.mbserver.mgr.api", "org.glassfish.jersey.examples");
+		mgrConf.property(JsonGenerator.PRETTY_PRINTING, true);
+		ServletHolder mgrApiServHolder = new ServletHolder(new ServletContainer(mgrConf));
+		mgr.addServlet(mgrApiServHolder, "/api/*");
 
 		mgr.addServlet(new ServletHolder(new ZkctlServlet("/zkctl/")), "/zkctl/*");
 		// mgr.addServlet(ZkctlServlet.getCLass("/zkctl/"), "/zkctl/*");
-		mgr.addServlet(MgrServletContainer.class, "/api/*");
+
+		// @WebServlet(initParams = @WebInitParam(name = "jersey.config.server.provider.packages", value =
+		// "com.sobey.mbserver.web.service"), urlPatterns = "/api/*", loadOnStartup = 1)
+
 	}
 
 	public boolean isStarted() {

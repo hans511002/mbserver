@@ -7,7 +7,6 @@
     <dependencySet>
       <useProjectArtifact>false</useProjectArtifact>
       <outputDirectory>lib/common</outputDirectory>
-      
     </dependencySet>
   </dependencySets>
   <fileSets>
@@ -31,7 +30,6 @@
       <directory>lib/rdbms</directory>
       <includes>
       <include>DbSupport-1.0.1.jar</include>
-      <include>druid-1.0.29.jar</include>
       </includes>
       <outputDirectory>/lib/common</outputDirectory>
     </fileSet>

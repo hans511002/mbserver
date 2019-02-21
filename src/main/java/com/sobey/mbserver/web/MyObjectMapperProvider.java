@@ -38,7 +38,6 @@ public class MyObjectMapperProvider implements ContextResolver<ObjectMapper> {
 	@Override
 	public ObjectMapper getContext(final Class<?> type) {
 		return defaultObjectMapper;
-
 	}
 
 	private static ObjectMapper createDefaultMapper() {
