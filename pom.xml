@@ -11,7 +11,18 @@
 	<url></url>
 	<inceptionYear>2019</inceptionYear>
 	<properties>
+		<jetty.version>9.4.14.v20181114</jetty.version>
 		<jersey.version>2.28</jersey.version>
+		<pulsar.version>2.3.0</pulsar.version>
+		<jedis.version>3.0.1</jedis.version>
+		<mongo.version>3.10.1</mongo.version>
+		<elasticsearch.version>6.6.1</elasticsearch.version>
+		<netty.version>5.0.0.Alpha2</netty.version>
+		<zookeeper.version>3.4.13</zookeeper.version>
+		<zkclient.version>0.11</zkclient.version>
+		<jackson.version>2.9.8</jackson.version>
+		<servlet.version>4.0.1</servlet.version>
+		
 		<argLine>-Dfile.encoding=UTF-8</argLine>
 		<junit.version>4.11</junit.version>
 		<gpg.skip>true</gpg.skip>
@@ -298,7 +309,61 @@
 		    <artifactId>druid</artifactId>
 		    <version>1.1.13</version>
 		</dependency>
-		        
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongo-java-driver</artifactId>
+		    <version>${mongo.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>${jedis.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-common -->
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-common</artifactId>
+		    <version>${pulsar.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-io-core -->
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-io-core</artifactId>
+		    <version>${pulsar.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-client -->
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-client</artifactId>
+		    <version>${pulsar.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-client-original
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-client-original</artifactId>
+		    <version>${pulsar.version}</version>
+		</dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.apache.pulsar/pulsar-client-admin 
+		<dependency>
+		    <groupId>org.apache.pulsar</groupId>
+		    <artifactId>pulsar-client-admin</artifactId>
+		    <version>${pulsar.version}</version>
+		</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch -->
+		<dependency>
+		    <groupId>org.elasticsearch</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		    <version>${elasticsearch.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-client -->
+		<dependency>
+		    <groupId>org.elasticsearch.client</groupId>
+		    <artifactId>elasticsearch-rest-client</artifactId>
+		    <version>${elasticsearch.version}</version>
+		</dependency>
+			        
 		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-common -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
@@ -496,19 +561,19 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.9.8</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.9.8</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.9.8</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
@@ -533,11 +598,11 @@
 			<version>2.4</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.8.1</version>
-		</dependency>
+	    <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8.1</version>
+        </dependency>
 		<!-- https://mvnrepository.com/artifact/com.googlecode.aviator/aviator -->
 		<dependency>
 			<groupId>com.googlecode.aviator</groupId>
@@ -554,103 +619,103 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
+			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.101tec/zkclient -->
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
-			<version>0.11</version>
+			<version>${zkclient.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
-			<version>3.4.13</version>
+			<version>${zookeeper.version}</version>
 			<type>pom</type>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
-			<version>5.0.0.Alpha2</version>
+			<version>${netty.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-http</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-util -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-util</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlets -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlets</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-io -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-io</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-security -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-security</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty.websocket/websocket-client -->
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-client</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-server</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-api</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-servlet</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty.websocket</groupId>
 			<artifactId>websocket-common</artifactId>
-			<version>9.4.14.v20181114</version>
+			<version>${jetty.version}</version>
 		</dependency>
 	</dependencies>
 </project>
