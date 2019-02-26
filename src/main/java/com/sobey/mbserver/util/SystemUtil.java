@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Map;
 
+import com.sobey.jcg.support.log4j.LogUtils;
+
 public class SystemUtil {
 
 	/**
@@ -269,4 +271,11 @@ public class SystemUtil {
 		}
 	}
 
+	public static void printJvmMem() {
+		Runtime run = Runtime.getRuntime();
+		long freeMem = run.freeMemory();
+		long totMem = run.totalMemory();
+		long maxMem = run.maxMemory();
+		LogUtils.info("freeMem=" + (freeMem / 1024 / 1024) + " totMem =" + (totMem / 1024 / 1024) + " maxMem =" + (maxMem / 1024 / 1024));
+	}
 }

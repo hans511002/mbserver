@@ -12,7 +12,7 @@
 	</context-param>
 	<context-param>
 		<param-name>sysStartInitClass</param-name>
-		<param-value>com.sobey.jcg.support.web.init.SystemVariableInit,com.sobey.jcg.support.web.init.DataSourceManagerInit</param-value>
+		<param-value>com.sobey.mbserver.web.init.SysVarInit,com.sobey.mbserver.web.init.DbSourceInit</param-value>
 	</context-param>
 	<listener>
 		<listener-class>com.sobey.jcg.support.web.SystemInitListener</listener-class>

@@ -1,8 +1,6 @@
 package com.sobey.mbserver.exception;
 
-import java.io.IOException;
-
-public class ConfigException extends IOException {
+public class ConfigException extends RuntimeException {
 
 	public ConfigException() {
 		super();

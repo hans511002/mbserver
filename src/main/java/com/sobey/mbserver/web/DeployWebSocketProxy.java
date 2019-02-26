@@ -10,8 +10,8 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
-import com.sobey.jcg.sobeyhive.main.DaemonMaster;
 import com.sobey.jcg.support.log4j.LogUtils;
+import com.sobey.mbserver.main.DaemonMaster;
 import com.sobey.mbserver.web.DeployWebSocketServer.ClientSession;
 import com.sobey.mbserver.web.init.SysConfig;
 

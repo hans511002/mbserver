@@ -1,4 +1,4 @@
-package com.sobey.jcg.sobeyhive.main;
+package com.sobey.mbserver.main;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -27,7 +27,7 @@ public class SysVarInit implements ISystemStart {
 		// CLASS_PATH = this.getClass().getResource("/").toString();
 		// CLASS_PATH = java.net.URLDecoder.decode(CLASS_PATH);
 		SystemVariableInit.CLASS_PATH = servletContext.getRealPath("/WEB-INF/classes") + File.separator;
-		SystemConstant.setSYS_CONF_FILE("support.properties");
+		SystemConstant.setSYS_CONF_FILE("server.properties");
 		SystemVariable.init();// 先加载
 		LogUtils.info("WEB_ROOT_PATH=" + SystemVariableInit.WEB_ROOT_PATH);
 		LogUtils.info("CLASS_PATH=" + SystemVariableInit.CLASS_PATH);

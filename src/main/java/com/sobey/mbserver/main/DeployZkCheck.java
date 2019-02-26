@@ -1,4 +1,4 @@
-package com.sobey.jcg.sobeyhive.main;
+package com.sobey.mbserver.main;
 
 import com.sobey.jcg.support.log4j.LogUtils;
 import com.sobey.jcg.support.utils.Utils;

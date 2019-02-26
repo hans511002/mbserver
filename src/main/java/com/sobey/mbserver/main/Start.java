@@ -1,4 +1,4 @@
-package com.sobey.jcg.sobeyhive.main;
+package com.sobey.mbserver.main;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -10,16 +10,17 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
-import sun.misc.Signal;
-import sun.misc.SignalHandler; 
-
 import com.sobey.jcg.support.log4j.LogUtils;
 import com.sobey.jcg.support.sys.SystemConstant;
 import com.sobey.jcg.support.sys.SystemVariable;
 import com.sobey.jcg.support.web.SystemInitListener;
 import com.sobey.mbserver.util.HasThread;
+import com.sobey.mbserver.util.SystemUtil;
 import com.sobey.mbserver.util.ToolUtil;
 import com.sobey.mbserver.web.init.SysVar;
+
+import sun.misc.Signal;
+import sun.misc.SignalHandler;
 
 public class Start {
 
@@ -120,6 +121,7 @@ public class Start {
 		SystemConstant.setSYS_CONF_FILE("server.properties");
 		System.setProperty("logFileName", "deployactor");
 		CommandLine cmd = buildCommandline(args);
+
 		if (cmd == null) {
 			throw new IOException("参数错误");
 		}
@@ -130,6 +132,7 @@ public class Start {
 		// ToolUtil.sleep(15000);
 		// }
 		// }
+		SystemUtil.printJvmMem();
 		if (cmd.hasOption("d")) {
 			SysVar.isDebug = true;
 		}

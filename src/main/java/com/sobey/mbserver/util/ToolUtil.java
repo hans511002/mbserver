@@ -48,14 +48,14 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sobey.jcg.support.log4j.LogUtils;
+import com.sobey.jcg.support.utils.Convert;
+
 import sun.jvmstat.monitor.MonitorException;
 import sun.jvmstat.monitor.MonitoredHost;
 import sun.jvmstat.monitor.MonitoredVm;
 import sun.jvmstat.monitor.MonitoredVmUtil;
 import sun.jvmstat.monitor.VmIdentifier;
-
-import com.sobey.jcg.support.log4j.LogUtils;
-import com.sobey.jcg.support.utils.Convert;
 
 public class ToolUtil {
 	public static final String STAT_JOBS = "jobs";

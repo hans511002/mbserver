@@ -45,9 +45,9 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.sobey.jcg.sobeyhive.main.DaemonMaster;
 import com.sobey.jcg.support.log4j.LogUtils;
 import com.sobey.jcg.support.utils.Convert;
+import com.sobey.mbserver.main.DaemonMaster;
 import com.sobey.mbserver.util.DateUtils;
 import com.sobey.mbserver.util.DeflateUtils;
 import com.sobey.mbserver.util.GZIPUtils;

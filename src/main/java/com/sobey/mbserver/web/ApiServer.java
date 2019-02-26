@@ -24,8 +24,8 @@ import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvi
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
-import com.sobey.jcg.sobeyhive.main.DaemonMaster;
 import com.sobey.jcg.support.log4j.LogUtils;
+import com.sobey.mbserver.main.DaemonMaster;
 import com.sobey.mbserver.mgr.servlet.ZkctlServlet;
 import com.sobey.mbserver.web.init.SysConfig;
 
@@ -203,7 +203,8 @@ public class ApiServer {
 	private void initServlets() throws IOException {
 		// ServiceReqHandler.addMasterPath("/deploy/");
 		ResourceConfig webConf = new ResourceConfig();
-		webConf.register(JacksonJsonProvider.class, JacksonFeature.class);
+		webConf.register(JacksonJsonProvider.class);
+		webConf.register(JacksonFeature.class);
 		// webConf.register(MyObjectMapperProvider.class, JacksonFeature.class);
 		webConf.packages("com.sobey.mbserver.web.api", "org.glassfish.jersey.examples");
 		webConf.property(JsonGenerator.PRETTY_PRINTING, true);
@@ -213,8 +214,7 @@ public class ApiServer {
 		web.addServlet(DeployWebSocketServer.class, "/deploy/LogsWS");
 		// web.addServlet(new ServletHolder(new ZkctlServlet("/zkctl/")), "/zkctl/*");
 
-		ResourceConfig mgrConf = new ResourceConfig();
-		mgrConf.register(JacksonJsonProvider.class, JacksonFeature.class);
+		ResourceConfig mgrConf = new ResourceConfig(JacksonJsonProvider.class, JacksonFeature.class);
 		mgrConf.packages("com.sobey.mbserver.mgr.api", "org.glassfish.jersey.examples");
 		mgrConf.property(JsonGenerator.PRETTY_PRINTING, true);
 		ServletHolder mgrApiServHolder = new ServletHolder(new ServletContainer(mgrConf));
