@@ -1,8 +1,8 @@
 package com.sobey.mbserver.main;
 
+import com.sobey.base.util.HasThread;
 import com.sobey.jcg.support.log4j.LogUtils;
 import com.sobey.jcg.support.utils.Utils;
-import com.sobey.mbserver.util.HasThread;
 import com.sobey.mbserver.web.init.Constant;
 import com.sobey.mbserver.web.init.SysVar;
 import com.sobey.mbserver.zk.JsonZkSerializer;
