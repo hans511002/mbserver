@@ -1,4 +1,4 @@
-package com.sobey.base.socket.remote;
+package com.sobey.base.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

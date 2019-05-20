@@ -86,10 +86,10 @@ public class ConnectOrder extends ServerOrders {
 		header.isRequest = false;
 		header.data.put("res", true);
 		header.data.put("upTime", PersistentStatePO.updateTime);
-		header.data.put("pos", PersistentStatePO.getClassRel());// 发送服务器端PO编码信息
+		header.data.put("pos", PersistentStatePO.getPPoTypes());// 发送服务器端PO编码信息
 		header.data.put("api", RemoteJavaApi.getAllClassSimpleNameMethodNames());// 发送服务器端API信息
 
-		LOG.info("PO ClassRel:" + PersistentStatePO.getClassRel().toString());
+		LOG.info("PO ClassRel:" + PersistentStatePO.getPPoTypes().toString());
 		LOG.info("Remote API :" + RemoteJavaApi.getAllClassSimpleNameMethodNames().toString());
 		synchronized (newHandle) {
 			newHandle.writeData(header);

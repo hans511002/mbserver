@@ -5,17 +5,12 @@ import java.lang.reflect.Type;
 import java.util.Comparator;
 import java.util.List;
 
-import com.sobey.base.SingleTableDAO.SeqValue;
 import com.sobey.base.exception.POException;
 import com.sobey.jcg.support.jdbc.DataAccess;
 
-public abstract class BaseDao<T> extends SingleTableDAO<T> {
-	public BaseDao(Class<T> PO, String tableName, String keyName) throws POException {
-		super(PO, tableName, keyName);
-	}
-
-	public BaseDao(Class<T> PO, String tableName, String keyName, String seqName) throws POException {
-		super(PO, tableName, keyName, seqName);
+public abstract class BaseDao<T extends PersistentStatePO> extends SingleTableDAO<T> {
+	public BaseDao(Class<T> PO) throws POException {
+		super(PO);
 	}
 
 	public Class<?> getGenericsType() {
@@ -34,24 +29,6 @@ public abstract class BaseDao<T> extends SingleTableDAO<T> {
 		}
 
 		return Object.class;
-	}
-
-	public static long createAndGetSeq(String seqName, int step) {
-		if (step < 1) {
-			step = 1;
-		}
-		SingleTableDAO.SeqValue seqv = null;
-		synchronized (seqMutex) {
-			seqv = (SingleTableDAO.SeqValue) seqMutex.get(seqName);
-			if (seqv == null) {
-				seqv = new SingleTableDAO.SeqValue();
-				seqMutex.put(seqName, seqv);
-			}
-		}
-		synchronized (seqv) {
-			seqv.seq += step;
-			return seqv.seq;
-		}
 	}
 
 	protected Page queryForPageList(int posStart, int pageSize, String sql, Object[] params) {

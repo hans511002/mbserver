@@ -12,7 +12,7 @@ import com.sobey.base.exception.POException;
 public class PushMsgDAO extends BaseDao<PushMsgPO> {
 
 	public PushMsgDAO() throws POException {
-		super(PushMsgPO.class, "M_COMPANY_PUSH_MSG", "PUSH_ID");
+		super(PushMsgPO.class);
 	}
 
 }

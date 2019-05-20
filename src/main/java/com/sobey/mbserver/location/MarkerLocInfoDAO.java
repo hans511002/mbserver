@@ -11,7 +11,7 @@ import com.sobey.base.util.LngLatUtil;
 
 public class MarkerLocInfoDAO extends BaseDao<MarkerLocInfoPO> {
 	public MarkerLocInfoDAO() throws POException {
-		super(MarkerLocInfoPO.class, "M_MARKER_LOCATION", "MARKER_ID");
+		super(MarkerLocInfoPO.class);
 	}
 
 	public MarkerLocInfoPO queryBySrcId(int type, long srcId) {
@@ -22,13 +22,12 @@ public class MarkerLocInfoDAO extends BaseDao<MarkerLocInfoPO> {
 		else {
 			sql = sql + " a.MARKER_ID=?";
 		}
-		return (MarkerLocInfoPO) this.access.queryForBean(sql, MarkerLocInfoPO.class, new Object[] { Integer.valueOf(type), Long.valueOf(srcId) });
+		return (MarkerLocInfoPO) this.getDataAccess().queryForBean(sql, MarkerLocInfoPO.class, new Object[] { Integer.valueOf(type), Long.valueOf(srcId) });
 	}
 
 	public void initLoad() {
 		String sql = "select MARKER_ID,MARKER_TYPE,MARKER_SRC_ID,MARKER_NAME,LONGITUDE ,LATITUDE,ELEVATION,DISTANCE_RANGE,MARKER_DESC from M_MARKER_LOCATION a ";
-
-		List<MarkerLocInfoPO> list = this.access.queryForBeanList(sql, MarkerLocInfoPO.class, new Object[0]);
+		List<MarkerLocInfoPO> list = this.getDataAccess().queryForBeanList(sql, MarkerLocInfoPO.class, new Object[0]);
 		synchronized (MarkerLocInfoAction.markers) {
 			for (MarkerLocInfoPO m : list)
 				MarkerLocInfoAction.addCache(m);
@@ -70,17 +69,15 @@ public class MarkerLocInfoDAO extends BaseDao<MarkerLocInfoPO> {
 		List params = new ArrayList();
 		Bounds bounds = LngLatUtil.getBounds(lng, lat, raidus);
 		String sql = "select MARKER_ID,MARKER_TYPE,MARKER_SRC_ID,MARKER_NAME,LONGITUDE,LATITUDE,ELEVATION,DISTANCE_RANGE,MARKER_DESC from M_MARKER_LOCATION WHERE ?<LONGITUDE and LONGITUDE<? and ?<LATITUDE and LATITUDE<? ";
-
 		params.add(Double.valueOf(bounds.getMinLng()));
 		params.add(Double.valueOf(bounds.getMaxLng()));
 		params.add(Double.valueOf(bounds.getMinLat()));
 		params.add(Double.valueOf(bounds.getMaxLat()));
-
 		if (-1 != type) {
 			params.add(Integer.valueOf(type));
 			sql = sql + " AND MARKER_TYPE =?";
 		}
-		return this.access.queryForBeanList(sql, MarkerLocInfoPO.class, params.toArray());
+		return this.getDataAccess().queryForBeanList(sql, MarkerLocInfoPO.class, params.toArray());
 	}
 
 	public List<MarkerLocInfoPO> queryByType(int type) {
@@ -90,12 +87,12 @@ public class MarkerLocInfoDAO extends BaseDao<MarkerLocInfoPO> {
 			params.add(Integer.valueOf(type));
 			sql = sql + "WHERE MARKER_TYPE=?";
 		}
-		return this.access.queryForBeanList(sql, MarkerLocInfoPO.class, params.toArray());
+		return this.getDataAccess().queryForBeanList(sql, MarkerLocInfoPO.class, params.toArray());
 	}
 
 	public MarkerLocInfoPO queryMarkerSrcId(long markerSrcId) {
 		String sql = "select MARKER_ID,MARKER_TYPE,MARKER_SRC_ID,MARKER_NAME,LONGITUDE,LATITUDE,ELEVATION,DISTANCE_RANGE,MARKER_DESC from M_MARKER_LOCATION WHERE MARKER_SRC_ID=? ";
 
-		return (MarkerLocInfoPO) this.access.queryForBean(sql, MarkerLocInfoPO.class, new Object[] { Long.valueOf(markerSrcId) });
+		return (MarkerLocInfoPO) this.getDataAccess().queryForBean(sql, MarkerLocInfoPO.class, new Object[] { Long.valueOf(markerSrcId) });
 	}
 }

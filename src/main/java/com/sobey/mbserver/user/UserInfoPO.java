@@ -6,6 +6,7 @@ import com.sobey.base.PersistentStatePO;
 
 public class UserInfoPO extends PersistentStatePO {
 
+	private static final long c = -6320201036996170285L;
 	public static HashMap<Long, UserInfoPO> UserInfos = new HashMap<Long, UserInfoPO>();
 	public static HashMap<String, UserInfoPO> UserNbrRels = new HashMap<String, UserInfoPO>();
 
@@ -44,7 +45,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_ID(long uSER_ID) {
-		setValue(uSER_ID);// USER_ID = uSER_ID;
+		set(uSER_ID);// USER_ID = uSER_ID;
 	}
 
 	public String getUSER_NAME() {
@@ -52,7 +53,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_NAME(String uSER_NAME) {
-		setValue(uSER_NAME);// USER_NAME = uSER_NAME;
+		set(uSER_NAME);// USER_NAME = uSER_NAME;
 	}
 
 	public String getMOBILE() {
@@ -60,7 +61,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setMOBILE(String mOBILE) {
-		setValue(mOBILE);// MOBILE = mOBILE;
+		set(mOBILE);// MOBILE = mOBILE;
 	}
 
 	public String getCONTACT_QQ() {
@@ -68,7 +69,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setCONTACT_QQ(String cONTACT_QQ) {
-		setValue(cONTACT_QQ);// CONTACT_QQ = cONTACT_QQ;
+		set(cONTACT_QQ);// CONTACT_QQ = cONTACT_QQ;
 	}
 
 	public String getCONTACT_EMAIL() {
@@ -76,7 +77,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setCONTACT_EMAIL(String cONTACT_EMAIL) {
-		setValue(cONTACT_EMAIL);// CONTACT_EMAIL = cONTACT_EMAIL;
+		set(cONTACT_EMAIL);// CONTACT_EMAIL = cONTACT_EMAIL;
 	}
 
 	public String getID_CARD() {
@@ -84,7 +85,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setID_CARD(String iD_CARD) {
-		setValue(iD_CARD);// ID_CARD = iD_CARD;
+		set(iD_CARD);// ID_CARD = iD_CARD;
 	}
 
 	public long getAREA_ID() {
@@ -92,7 +93,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setAREA_ID(long aREA_ID) {
-		setValue(aREA_ID);// AREA_ID = aREA_ID;
+		set(aREA_ID);// AREA_ID = aREA_ID;
 	}
 
 	public String getADDRESS() {
@@ -100,7 +101,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setADDRESS(String aDDRESS) {
-		setValue(aDDRESS);// ADDRESS = aDDRESS;
+		set(aDDRESS);// ADDRESS = aDDRESS;
 	}
 
 	public int getSTATE() {
@@ -108,7 +109,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setSTATE(int sTATE) {
-		setValue(sTATE);// STATE = sTATE;
+		set(sTATE);// STATE = sTATE;
 	}
 
 	public int getPUB_INFO_TYPE() {
@@ -116,7 +117,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setPUB_INFO_TYPE(int pUB_INFO_TYPE) {
-		setValue(pUB_INFO_TYPE);// PUB_INFO_TYPE = pUB_INFO_TYPE;
+		set(pUB_INFO_TYPE);// PUB_INFO_TYPE = pUB_INFO_TYPE;
 	}
 
 	public String getNICK_NAME() {
@@ -124,7 +125,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setNICK_NAME(String nICK_NAME) {
-		this.setValue(nICK_NAME);
+		this.set(nICK_NAME);
 	}
 
 	public String getUSER_AVATAR() {
@@ -132,7 +133,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_AVATAR(String uSER_AVATAR) {
-		this.setValue(uSER_AVATAR);// USER_AVATAR = uSER_AVATAR;
+		this.set(uSER_AVATAR);// USER_AVATAR = uSER_AVATAR;
 	}
 
 	public int getUSER_SEX() {
@@ -140,7 +141,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_SEX(int uSER_SEX) {
-		this.setValue(uSER_SEX);// USER_SEX = uSER_SEX;
+		this.set(uSER_SEX);// USER_SEX = uSER_SEX;
 	}
 
 	public int getUSER_AGE() {
@@ -148,7 +149,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_AGE(int uSER_AGE) {
-		this.setValue(uSER_AGE);// USER_AGE = uSER_AGE;
+		this.set(uSER_AGE);// USER_AGE = uSER_AGE;
 	}
 
 	public String getID_CARD_PHOTO() {
@@ -156,7 +157,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setID_CARD_PHOTO(String iD_CARD_PHOTO) {
-		this.setValue(iD_CARD_PHOTO);// ID_CARD_PHOTO = iD_CARD_PHOTO;
+		this.set(iD_CARD_PHOTO);// ID_CARD_PHOTO = iD_CARD_PHOTO;
 	}
 
 	public String getRECENT_PHOTO() {
@@ -164,7 +165,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setRECENT_PHOTO(String rECENT_PHOTO) {
-		this.setValue(rECENT_PHOTO);// RECENT_PHOTO = rECENT_PHOTO;
+		this.set(rECENT_PHOTO);// RECENT_PHOTO = rECENT_PHOTO;
 	}
 
 	public String getUSER_EDUC() {
@@ -172,7 +173,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_EDUC(String uSER_EDUC) {
-		this.setValue(uSER_EDUC);// USER_EDUC = uSER_EDUC;
+		this.set(uSER_EDUC);// USER_EDUC = uSER_EDUC;
 	}
 
 	public String getUSER_INCOME() {
@@ -180,7 +181,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSER_INCOME(String uSER_INCOME) {
-		this.setValue(uSER_INCOME);// USER_INCOME = uSER_INCOME;
+		this.set(uSER_INCOME);// USER_INCOME = uSER_INCOME;
 	}
 
 	public String getUSERS_CAREER() {
@@ -188,7 +189,7 @@ public class UserInfoPO extends PersistentStatePO {
 	}
 
 	public void setUSERS_CAREER(String uSERS_CAREER) {
-		this.setValue(uSERS_CAREER);// USERS_CAREER = uSERS_CAREER;
+		this.set(uSERS_CAREER);// USERS_CAREER = uSERS_CAREER;
 	}
 
 }

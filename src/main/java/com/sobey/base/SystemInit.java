@@ -20,11 +20,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.directwebremoting.WebContextFactory;
 
+import com.sobey.base.annotation.RemoteClass;
+import com.sobey.base.annotation.RemoteMethod;
 import com.sobey.base.exception.POException;
 import com.sobey.base.socket.SCHandler;
 import com.sobey.base.socket.TcpListener;
-import com.sobey.base.socket.remote.RemoteClass;
-import com.sobey.base.socket.remote.RemoteMethod;
 import com.sobey.base.util.ToolUtil;
 import com.sobey.jcg.support.jdbc.DataSourceImpl;
 import com.sobey.jcg.support.sys.DataSourceManager;

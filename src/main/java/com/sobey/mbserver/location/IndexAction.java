@@ -7,10 +7,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.sobey.base.BaseAction;
+import com.sobey.base.annotation.RemoteClass;
+import com.sobey.base.annotation.RemoteMethod;
 import com.sobey.base.socket.remote.NotNeedLoginMethod;
-import com.sobey.base.socket.remote.RemoteClass;
-import com.sobey.base.socket.remote.RemoteMethod;
 import com.sobey.base.util.MD5Hash;
+import com.sobey.jcg.support.sys.DataSourceManager;
 import com.sobey.jcg.support.utils.Convert;
 import com.sobey.mbserver.user.UserInfoDAO;
 import com.sobey.mbserver.user.UserInfoPO;
@@ -43,6 +44,8 @@ public class IndexAction extends BaseAction {
 			                + " FROM  C_SYSTEM_AREA  t ORDER BY PARENT_AREA_ID,ORDER_ID,AREA_CODE,AREA_ID");
 			return res;
 		} catch (Exception e) {
+		} finally {
+			DataSourceManager.destroy();
 		}
 		return null;
 

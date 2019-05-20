@@ -2,13 +2,13 @@ package com.sobey.base.socket.order;
 
 import java.io.IOException;
 
+import com.sobey.base.annotation.RemoteClass;
+import com.sobey.base.annotation.RemoteMethod;
 import com.sobey.base.socket.Order;
 import com.sobey.base.socket.OrderHeader;
 import com.sobey.base.socket.SCHandler;
 import com.sobey.base.socket.TcpListener.ClientInfo;
 import com.sobey.base.socket.remote.NotNeedLoginMethod;
-import com.sobey.base.socket.remote.RemoteClass;
-import com.sobey.base.socket.remote.RemoteMethod;
 
 @RemoteClass
 public class VerifyOrder {

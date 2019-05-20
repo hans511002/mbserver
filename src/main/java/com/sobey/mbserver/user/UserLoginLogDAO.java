@@ -11,7 +11,7 @@ import com.sobey.base.exception.POException;
 public class UserLoginLogDAO extends BaseDao<UserLoginLogPO> {
 
 	public UserLoginLogDAO() throws POException {
-		super(UserLoginLogPO.class, "C_USER_LOGIN_LOG", "LOGIN_LOG_ID");
+		super(UserLoginLogPO.class);
 	}
 
 }

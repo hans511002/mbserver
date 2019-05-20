@@ -15,13 +15,13 @@ import java.util.concurrent.ExecutorService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sobey.base.annotation.RemoteClass;
+import com.sobey.base.annotation.RemoteMethod;
 import com.sobey.base.socket.Order;
 import com.sobey.base.socket.OrderHeader;
 import com.sobey.base.socket.SCHandler;
 import com.sobey.base.socket.ServerName;
 import com.sobey.base.socket.TcpListener;
-import com.sobey.base.socket.remote.RemoteClass;
-import com.sobey.base.socket.remote.RemoteMethod;
 import com.sobey.base.util.DataInputBuffer;
 import com.sobey.base.util.DataOutputBuffer;
 import com.sobey.base.util.HasThread;

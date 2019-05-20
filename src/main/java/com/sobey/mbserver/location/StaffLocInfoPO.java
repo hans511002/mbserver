@@ -29,7 +29,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLOCATE_TYPE(int lOCATE_TYPE) {
-		setValue(lOCATE_TYPE);// LOCATE_TYPE = lOCATE_TYPE;
+		set(lOCATE_TYPE);// LOCATE_TYPE = lOCATE_TYPE;
 	}
 
 	public int getLOCATE_RADIUS() {
@@ -37,7 +37,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLOCATE_RADIUS(int lOCATE_RADIUS) {
-		setValue(lOCATE_RADIUS);// LOCATE_RADIUS = lOCATE_RADIUS;
+		set(lOCATE_RADIUS);// LOCATE_RADIUS = lOCATE_RADIUS;
 	}
 
 	public String getERROR_MSG() {
@@ -45,7 +45,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setERROR_MSG(String eRROR_MSG) {
-		setValue(eRROR_MSG);// this.setValue(eRROR_MSG);// ERROR_MSG = eRROR_MSG;
+		set(eRROR_MSG);// this.setValue(eRROR_MSG);// ERROR_MSG = eRROR_MSG;
 	}
 
 	public StaffLocInfoPO() {
@@ -58,7 +58,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLOCINFO_ID(long lOCINFO_ID) {
-		setValue(lOCINFO_ID);// this.setValue(lOCINFO_ID);// LOCINFO_ID = lOCINFO_ID;
+		set(lOCINFO_ID);// this.setValue(lOCINFO_ID);// LOCINFO_ID = lOCINFO_ID;
 	}
 
 	public long getSTAFF_ID() {
@@ -66,7 +66,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setSTAFF_ID(long sTAFF_ID) {
-		this.setValue(sTAFF_ID);// STAFF_ID = sTAFF_ID;
+		this.set(sTAFF_ID);// STAFF_ID = sTAFF_ID;
 	}
 
 	public long getMIN_MARKER_ID1() {
@@ -74,7 +74,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMIN_MARKER_ID1(long mIN_MARKER_ID1) {
-		this.setValue(mIN_MARKER_ID1);// MIN_MARKER_ID1 = mIN_MARKER_ID1;
+		this.set(mIN_MARKER_ID1);// MIN_MARKER_ID1 = mIN_MARKER_ID1;
 	}
 
 	public long getMIN_MARKER_ID2() {
@@ -82,7 +82,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMIN_MARKER_ID2(long mIN_MARKER_ID2) {
-		this.setValue(mIN_MARKER_ID2);// MIN_MARKER_ID2 = mIN_MARKER_ID2;
+		this.set(mIN_MARKER_ID2);// MIN_MARKER_ID2 = mIN_MARKER_ID2;
 	}
 
 	public long getMIN_MARKER_ID3() {
@@ -90,7 +90,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMIN_MARKER_ID3(long mIN_MARKER_ID3) {
-		this.setValue(mIN_MARKER_ID3);// MIN_MARKER_ID3 = mIN_MARKER_ID3;
+		this.set(mIN_MARKER_ID3);// MIN_MARKER_ID3 = mIN_MARKER_ID3;
 	}
 
 	public String getSTAFF_MOBILE() {
@@ -98,7 +98,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setSTAFF_MOBILE(String sTAFF_MOBILE) {
-		this.setValue(sTAFF_MOBILE);// STAFF_MOBILE = sTAFF_MOBILE;
+		this.set(sTAFF_MOBILE);// STAFF_MOBILE = sTAFF_MOBILE;
 	}
 
 	public double getLONGITUDE() {
@@ -106,7 +106,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLONGITUDE(double lONGITUDE) {
-		this.setValue(lONGITUDE);// LONGITUDE = lONGITUDE;
+		this.set(lONGITUDE);// LONGITUDE = lONGITUDE;
 	}
 
 	public double getLATITUDE() {
@@ -114,7 +114,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLATITUDE(double lATITUDE) {
-		this.setValue(lATITUDE);// LATITUDE = lATITUDE;
+		this.set(lATITUDE);// LATITUDE = lATITUDE;
 	}
 
 	public double getELEVATION() {
@@ -122,7 +122,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setELEVATION(double eLEVATION) {
-		this.setValue(eLEVATION);// ELEVATION = eLEVATION;
+		this.set(eLEVATION);// ELEVATION = eLEVATION;
 	}
 
 	public Date getFEEDBACK_TIME() {
@@ -130,7 +130,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setFEEDBACK_TIME(Date fEEDBACK_TIME) {
-		this.setValue(fEEDBACK_TIME);// FEEDBACK_TIME = fEEDBACK_TIME;
+		this.set(fEEDBACK_TIME);// FEEDBACK_TIME = fEEDBACK_TIME;
 	}
 
 	public int getSTAFF_ACTION() {
@@ -138,7 +138,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setSTAFF_ACTION(int sTAFF_ACTION) {
-		this.setValue(sTAFF_ACTION);// STAFF_ACTION = sTAFF_ACTION;
+		this.set(sTAFF_ACTION);// STAFF_ACTION = sTAFF_ACTION;
 	}
 
 	public double getMARKER_ID1_DISTANCE() {
@@ -146,7 +146,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_ID1_DISTANCE(double mARKER_ID1_DISTANCE) {
-		this.setValue(mARKER_ID1_DISTANCE);// MARKER_ID1_DISTANCE = mARKER_ID1_DISTANCE;
+		this.set(mARKER_ID1_DISTANCE);// MARKER_ID1_DISTANCE = mARKER_ID1_DISTANCE;
 	}
 
 	public double getMARKER_ID2_DISTANCE() {
@@ -154,7 +154,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_ID2_DISTANCE(double mARKER_ID2_DISTANCE) {
-		this.setValue(mARKER_ID2_DISTANCE);// MARKER_ID2_DISTANCE = mARKER_ID2_DISTANCE;
+		this.set(mARKER_ID2_DISTANCE);// MARKER_ID2_DISTANCE = mARKER_ID2_DISTANCE;
 	}
 
 	public double getMARKER_ID3_DISTANCE() {
@@ -162,7 +162,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_ID3_DISTANCE(double mARKER_ID3_DISTANCE) {
-		this.setValue(mARKER_ID3_DISTANCE);// MARKER_ID3_DISTANCE = mARKER_ID3_DISTANCE;
+		this.set(mARKER_ID3_DISTANCE);// MARKER_ID3_DISTANCE = mARKER_ID3_DISTANCE;
 	}
 
 	public String getADDRESS_DESC() {
@@ -170,7 +170,7 @@ public class StaffLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setADDRESS_DESC(String aDDRESS_DESC) {
-		this.setValue(aDDRESS_DESC);// ADDRESS_DESC = aDDRESS_DESC;
+		this.set(aDDRESS_DESC);// ADDRESS_DESC = aDDRESS_DESC;
 	}
 
 }

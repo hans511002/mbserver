@@ -18,7 +18,7 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setLOGIN_LOG_ID(long lOGIN_LOG_ID) {
-		setValue(Long.valueOf(lOGIN_LOG_ID));
+		set(Long.valueOf(lOGIN_LOG_ID));
 	}
 
 	public long getUSER_ID() {
@@ -26,7 +26,7 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setUSER_ID(long uSER_ID) {
-		setValue(Long.valueOf(uSER_ID));
+		set(Long.valueOf(uSER_ID));
 	}
 
 	public Date getLOGIN_TIME() {
@@ -34,7 +34,7 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setLOGIN_TIME(Date lOGIN_TIME) {
-		setValue(lOGIN_TIME);
+		set(lOGIN_TIME);
 	}
 
 	public Date getLOGOUT_TIME() {
@@ -42,7 +42,7 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setLOGOUT_TIME(Date lOGOUT_TIME) {
-		setValue(lOGOUT_TIME);
+		set(lOGOUT_TIME);
 	}
 
 	public double getLOGIN_LNG() {
@@ -50,7 +50,7 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setLOGIN_LNG(double lOGIN_LNG) {
-		setValue(Double.valueOf(lOGIN_LNG));
+		set(Double.valueOf(lOGIN_LNG));
 	}
 
 	public double getLOGIN_LAT() {
@@ -66,6 +66,6 @@ public class UserLoginLogPO extends PersistentStatePO {
 	}
 
 	public void setLOGIN_ADDRESS(String lOGIN_ADDRESS) {
-		setValue(lOGIN_ADDRESS);
+		set(lOGIN_ADDRESS);
 	}
 }

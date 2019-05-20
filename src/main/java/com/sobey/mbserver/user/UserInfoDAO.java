@@ -7,7 +7,7 @@ import com.sobey.base.exception.POException;
 
 public class UserInfoDAO extends BaseDao<UserInfoPO> {
 	public UserInfoDAO() throws POException {
-		super(UserInfoPO.class, "C_USER_INFO", "USER_ID", "SEQ_USER_ID");
+		super(UserInfoPO.class);
 	}
 
 	public UserInfoPO queryUser(String nbr) {

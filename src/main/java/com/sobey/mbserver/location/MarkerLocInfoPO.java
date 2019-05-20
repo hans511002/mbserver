@@ -18,7 +18,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_ID(long mARKER_ID) {
-		this.setValue(mARKER_ID);// MARKER_ID = mARKER_ID;
+		this.set(mARKER_ID);// MARKER_ID = mARKER_ID;
 	}
 
 	public int getMARKER_TYPE() {
@@ -26,7 +26,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_TYPE(int mARKER_TYPE) {
-		this.setValue(mARKER_TYPE);// MARKER_TYPE = mARKER_TYPE;
+		this.set(mARKER_TYPE);// MARKER_TYPE = mARKER_TYPE;
 	}
 
 	public long getMARKER_SRC_ID() {
@@ -34,7 +34,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_SRC_ID(long mARKER_SRC_ID) {
-		this.setValue(mARKER_SRC_ID);// MARKER_SRC_ID = mARKER_SRC_ID;
+		this.set(mARKER_SRC_ID);// MARKER_SRC_ID = mARKER_SRC_ID;
 	}
 
 	public String getMARKER_NAME() {
@@ -42,7 +42,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_NAME(String mARKER_NAME) {
-		this.setValue(mARKER_NAME);// MARKER_NAME = mARKER_NAME;
+		this.set(mARKER_NAME);// MARKER_NAME = mARKER_NAME;
 	}
 
 	public double getLONGITUDE() {
@@ -50,7 +50,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLONGITUDE(double lONGITUDE) {
-		this.setValue(lONGITUDE);// LONGITUDE = lONGITUDE;
+		this.set(lONGITUDE);// LONGITUDE = lONGITUDE;
 	}
 
 	public double getLATITUDE() {
@@ -58,7 +58,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setLATITUDE(double lATITUDE) {
-		this.setValue(lATITUDE);// LATITUDE = lATITUDE;
+		this.set(lATITUDE);// LATITUDE = lATITUDE;
 	}
 
 	public double getELEVATION() {
@@ -66,7 +66,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setELEVATION(double eLEVATION) {
-		this.setValue(eLEVATION);// ELEVATION = eLEVATION;
+		this.set(eLEVATION);// ELEVATION = eLEVATION;
 	}
 
 	public double getDISTANCE_RANGE() {
@@ -74,7 +74,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setDISTANCE_RANGE(double dISTANCE_RANGE) {
-		this.setValue(dISTANCE_RANGE);// DISTANCE_RANGE = dISTANCE_RANGE;
+		this.set(dISTANCE_RANGE);// DISTANCE_RANGE = dISTANCE_RANGE;
 	}
 
 	public String getMARKER_DESC() {
@@ -82,7 +82,7 @@ public class MarkerLocInfoPO extends PersistentStatePO {
 	}
 
 	public void setMARKER_DESC(String mARKER_DESC) {
-		this.setValue(mARKER_DESC);// MARKER_DESC = mARKER_DESC;
+		this.set(mARKER_DESC);// MARKER_DESC = mARKER_DESC;
 	}
 
 }

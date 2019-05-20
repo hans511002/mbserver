@@ -25,7 +25,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setRES_PUSH_TYPE(int rES_PUSH_TYPE) {
-		this.setValue(rES_PUSH_TYPE);// RES_PUSH_TYPE = rES_PUSH_TYPE;
+		this.set(rES_PUSH_TYPE);// RES_PUSH_TYPE = rES_PUSH_TYPE;
 	}
 
 	public long getCOMPANY_ID() {
@@ -33,7 +33,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setCOMPANY_ID(long cOMPANY_ID) {
-		this.setValue(cOMPANY_ID);// COMPANY_ID = cOMPANY_ID;
+		this.set(cOMPANY_ID);// COMPANY_ID = cOMPANY_ID;
 	}
 
 	public long getORDER_ID() {
@@ -41,7 +41,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setORDER_ID(long oRDER_ID) {
-		this.setValue(oRDER_ID);// ORDER_ID = oRDER_ID;
+		this.set(oRDER_ID);// ORDER_ID = oRDER_ID;
 	}
 
 	public int getPUSH_TYPE() {
@@ -49,7 +49,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setPUSH_TYPE(int pUSH_TYPE) {
-		this.setValue(pUSH_TYPE);// PUSH_TYPE = pUSH_TYPE;
+		this.set(pUSH_TYPE);// PUSH_TYPE = pUSH_TYPE;
 	}
 
 	public int getEVENT_TYPE() {
@@ -57,7 +57,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setEVENT_TYPE(int eVENT_TYPE) {
-		this.setValue(eVENT_TYPE);// EVENT_TYPE = eVENT_TYPE;
+		this.set(eVENT_TYPE);// EVENT_TYPE = eVENT_TYPE;
 	}
 
 	public int getACTION_TYPE() {
@@ -65,7 +65,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setACTION_TYPE(int aCTION_TYPE) {
-		this.setValue(aCTION_TYPE);// ACTION_TYPE = aCTION_TYPE;
+		this.set(aCTION_TYPE);// ACTION_TYPE = aCTION_TYPE;
 	}
 
 	public String getSTAFF_MOBILE() {
@@ -73,7 +73,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setSTAFF_MOBILE(String sTAFF_MOBILE) {
-		this.setValue(sTAFF_MOBILE);// STAFF_MOBILE = sTAFF_MOBILE;
+		this.set(sTAFF_MOBILE);// STAFF_MOBILE = sTAFF_MOBILE;
 	}
 
 	public String getERROR_MSG() {
@@ -81,7 +81,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setERROR_MSG(String eRROR_MSG) {
-		this.setValue(eRROR_MSG);// ERROR_MSG = eRROR_MSG;
+		this.set(eRROR_MSG);// ERROR_MSG = eRROR_MSG;
 	}
 
 	public long getPUSH_ID() {
@@ -89,7 +89,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setPUSH_ID(long pUSH_ID) {
-		this.setValue(pUSH_ID);// PUSH_ID = pUSH_ID;
+		this.set(pUSH_ID);// PUSH_ID = pUSH_ID;
 	}
 
 	public long getSTAFF_ID() {
@@ -97,7 +97,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setSTAFF_ID(long sTAFF_ID) {
-		this.setValue(sTAFF_ID);// STAFF_ID = sTAFF_ID;
+		this.set(sTAFF_ID);// STAFF_ID = sTAFF_ID;
 	}
 
 	public Date getSUBMIT_TIME() {
@@ -105,7 +105,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setSUBMIT_TIME(Date sUBMIT_TIME) {
-		this.setValue(sUBMIT_TIME);// SUBMIT_TIME = sUBMIT_TIME;
+		this.set(sUBMIT_TIME);// SUBMIT_TIME = sUBMIT_TIME;
 	}
 
 	public Date getPUSH_TIME() {
@@ -113,7 +113,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setPUSH_TIME(Date pUSH_TIME) {
-		this.setValue(pUSH_TIME);// PUSH_TIME = pUSH_TIME;
+		this.set(pUSH_TIME);// PUSH_TIME = pUSH_TIME;
 	}
 
 	public String getMSG() {
@@ -121,7 +121,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setMSG(String mSG) {
-		this.setValue(mSG);// MSG = mSG;
+		this.set(mSG);// MSG = mSG;
 	}
 
 	public int getPUSH_STATE() {
@@ -129,7 +129,7 @@ public class PushMsgPO extends PersistentStatePO {
 	}
 
 	public void setPUSH_STATE(int pUSH_STATE) {
-		this.setValue(pUSH_STATE);// PUSH_STATE = pUSH_STATE;
+		this.set(pUSH_STATE);// PUSH_STATE = pUSH_STATE;
 	}
 
 }

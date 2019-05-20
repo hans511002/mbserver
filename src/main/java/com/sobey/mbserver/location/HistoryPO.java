@@ -159,7 +159,7 @@ public class HistoryPO {
 		}
 
 		public void setERROR_MSG(String eRROR_MSG) {
-			setValue(eRROR_MSG);
+			set(eRROR_MSG);
 		}
 
 		public long getLOCINFO_ID() {
@@ -167,7 +167,7 @@ public class HistoryPO {
 		}
 
 		public void setLOCINFO_ID(long lOCINFO_ID) {
-			setValue(Long.valueOf(lOCINFO_ID));
+			set(Long.valueOf(lOCINFO_ID));
 		}
 
 		public double getLONGITUDE() {
@@ -175,7 +175,7 @@ public class HistoryPO {
 		}
 
 		public void setLONGITUDE(double lONGITUDE) {
-			setValue(Double.valueOf(lONGITUDE));
+			set(Double.valueOf(lONGITUDE));
 		}
 
 		public double getLATITUDE() {
@@ -183,7 +183,7 @@ public class HistoryPO {
 		}
 
 		public void setLATITUDE(double lATITUDE) {
-			setValue(Double.valueOf(lATITUDE));
+			set(Double.valueOf(lATITUDE));
 		}
 
 		public double getELEVATION() {
@@ -191,7 +191,7 @@ public class HistoryPO {
 		}
 
 		public void setELEVATION(double eLEVATION) {
-			setValue(Double.valueOf(eLEVATION));
+			set(Double.valueOf(eLEVATION));
 		}
 
 		public Date getFEEDBACK_TIME() {
@@ -199,7 +199,7 @@ public class HistoryPO {
 		}
 
 		public void setFEEDBACK_TIME(Date fEEDBACK_TIME) {
-			setValue(fEEDBACK_TIME);
+			set(fEEDBACK_TIME);
 		}
 
 		public int getSTAFF_ACTION() {
@@ -207,7 +207,7 @@ public class HistoryPO {
 		}
 
 		public void setSTAFF_ACTION(int sTAFF_ACTION) {
-			setValue(Integer.valueOf(sTAFF_ACTION));
+			set(Integer.valueOf(sTAFF_ACTION));
 		}
 
 		public String getADDRESS_DESC() {
@@ -215,7 +215,7 @@ public class HistoryPO {
 		}
 
 		public void setADDRESS_DESC(String aDDRESS_DESC) {
-			setValue(aDDRESS_DESC);
+			set(aDDRESS_DESC);
 		}
 
 		public String toString() {

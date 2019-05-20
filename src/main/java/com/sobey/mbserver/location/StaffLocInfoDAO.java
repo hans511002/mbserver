@@ -21,7 +21,7 @@ import com.sobey.mbserver.location.HistoryPO.Locus;
 public class StaffLocInfoDAO extends BaseDao<StaffLocInfoPO> {
 
 	public StaffLocInfoDAO() throws POException {
-		super(StaffLocInfoPO.class, "M_COMPANY_STAFF_LOCINFO", "LOCINFO_ID");
+		super(StaffLocInfoPO.class);
 	}
 
 	static java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -37,7 +37,7 @@ public class StaffLocInfoDAO extends BaseDao<StaffLocInfoPO> {
 		        + " left join M_MARKER_LOCATION m2 on l.MIN_MARKER_ID2=m2.MARKER_ID "
 		        + " left join M_MARKER_LOCATION m3 on l.MIN_MARKER_ID3=m3.MARKER_ID       "
 		        + "  WHERE  l.staff_id=?  and DATE_FORMAT(FEEDBACK_TIME,'%Y%m%d') =? order by FEEDBACK_TIME";
-		return this.access.queryForBeanList(sql, StaffLocusInfoPO.class, staffId, sdf.format(time));
+		return (List<StaffLocusInfoPO>) getDataAccess().queryForBeanList(sql, StaffLocusInfoPO.class, staffId, sdf.format(time));
 	}
 
 	/**
@@ -58,17 +58,17 @@ public class StaffLocInfoDAO extends BaseDao<StaffLocInfoPO> {
 		        + " left join M_MARKER_LOCATION m2 on l.MIN_MARKER_ID2=m2.MARKER_ID "
 		        + " left join M_MARKER_LOCATION m3 on l.MIN_MARKER_ID3=m3.MARKER_ID       "
 		        + "  WHERE  l.staff_id=?  and FEEDBACK_TIME>? order by FEEDBACK_TIME desc";
-		return this.access.queryForBeanList(sql, StaffLocusInfoPO.class, staffId, sdf2.format(time));
+		return this.getDataAccess().queryForBeanList(sql, StaffLocusInfoPO.class, staffId, sdf2.format(time));
 	}
 
 	public List<Locus> queryLocInfoAddres() {
 		String sql = "SELECT LOCINFO_ID,LONGITUDE,LATITUDE ,ELEVATION,FEEDBACK_TIME,STAFF_ACTION, ADDRESS_DESC,ERROR_MSG from M_COMPANY_STAFF_LOCINFO where ADDRESS_DESC is null and  LONGITUDE!=0 and LATITUDE!=0 ";
-		return this.access.queryForBeanList(sql, Locus.class);
+		return this.getDataAccess().queryForBeanList(sql, Locus.class);
 	}
 
 	public void updateLocu(Locus ls) {
 		String sql = "update M_COMPANY_STAFF_LOCINFO set ADDRESS_DESC=? where LOCINFO_ID=?";
-		access.execNoQuerySql(sql, ls.ADDRESS_DESC, ls.LOCINFO_ID);
+		getDataAccess().execNoQuerySql(sql, ls.ADDRESS_DESC, ls.LOCINFO_ID);
 	}
 
 	public void updateLocus(List<Locus> list) {
@@ -86,12 +86,12 @@ public class StaffLocInfoDAO extends BaseDao<StaffLocInfoPO> {
 			params[i][0] = desc.get(i);
 			params[i][1] = ids.get(i);
 		}
-		access.execUpdateBatch(sql, params);
+		getDataAccess().execUpdateBatch(sql, params);
 	}
 
 	public Locus queryLastLoc(long staffId) {
 		String sql = "SELECT LOCINFO_ID,LONGITUDE,LATITUDE,ELEVATION,FEEDBACK_TIME,STAFF_ACTION, ADDRESS_DESC,ERROR_MSG FROM M_COMPANY_STAFF_LOCINFO WHERE LONGITUDE>0 and STAFF_ID=? ORDER BY FEEDBACK_TIME DESC LIMIT 0,1";
-		return this.access.queryForBean(sql, Locus.class, staffId);
+		return this.getDataAccess().queryForBean(sql, Locus.class, staffId);
 	}
 
 	public StaffLocusInfoPO queryLastVaildLocu(long staffId) throws SQLException {
@@ -122,13 +122,13 @@ public class StaffLocInfoDAO extends BaseDao<StaffLocInfoPO> {
 		String sql = "SELECT l.LOCINFO_ID,l.LONGITUDE,l.LATITUDE,l.ELEVATION,l.FEEDBACK_TIME,l.STAFF_ACTION, l.ADDRESS_DESC,l.ERROR_MSG,m.MARKER_NAME FROM M_COMPANY_STAFF_LOCINFO l "
 		        + "left join M_MARKER_LOCATION m on l.MIN_MARKER_ID1=m.MARKER_ID "
 		        + "WHERE l.LONGITUDE>0 AND l.LATITUDE>0 AND l.staff_id=? AND DATE_FORMAT(l.FEEDBACK_TIME,'%Y%m%d') =? order by l.FEEDBACK_TIME";
-		return this.access.queryForList(sql, staffId, sdf.format(time));
+		return this.getDataAccess().queryForList(sql, staffId, sdf.format(time));
 	}
 
 	public List<StaffLocusInfoPO> queryStaffLocusList(long staffId, Date stime, Date etime) throws SQLException {
 		String sql = "SELECT  l.LOCINFO_ID,l.STAFF_ID,l.MIN_MARKER_ID1,l.MIN_MARKER_ID2,l.MIN_MARKER_ID3,l.STAFF_MOBILE,l.LONGITUDE,l.LATITUDE,l.ELEVATION, "
 		        + "l.FEEDBACK_TIME,l.STAFF_ACTION,l.MARKER_ID1_DISTANCE,l.MARKER_ID2_DISTANCE,l.MARKER_ID3_DISTANCE,l.ADDRESS_DESC,l.ERROR_MSG "
 		        + " FROM  M_COMPANY_STAFF_LOCINFO l   " + "  WHERE  l.staff_id=?  and FEEDBACK_TIME >=? and FEEDBACK_TIME <=? order by FEEDBACK_TIME";
-		return this.access.queryForBeanList(sql, StaffLocusInfoPO.class, staffId, new Timestamp(stime.getTime()), new Timestamp(etime.getTime()));
+		return this.getDataAccess().queryForBeanList(sql, StaffLocusInfoPO.class, staffId, new Timestamp(stime.getTime()), new Timestamp(etime.getTime()));
 	}
 }

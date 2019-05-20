@@ -19,9 +19,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.sobey.base.PersistentStatePO;
+import com.sobey.base.PersistentStatePO.PPOAttr;
 import com.sobey.base.socket.OrderHeader;
 import com.sobey.base.socket.ServerName;
 import com.sobey.base.socket.SocketWriteable;
+import com.sobey.jcg.support.log4j.LogUtils;
 
 public class DataSerializable implements Serializable {
 	public static final Log LOG = LogFactory.getLog(DataSerializable.class.getName());
@@ -168,12 +170,17 @@ public class DataSerializable implements Serializable {
 				return null;
 			}
 		}
-		case 125: {
-			int classType = buffer.readInt();
+		case PersistentStatePO.SerializableTypeCode: {
+			long classType = buffer.readLong();
 			PersistentStatePO ppo = null;
 			try {
-				Class c = PersistentStatePO.getTypeClass(classType);
-				ppo = (PersistentStatePO) c.newInstance();
+				PPOAttr ppoAttr = PersistentStatePO.getPpoAttr(classType);
+				if (ppoAttr == null) {
+					Object obj = DataSerializable.readFromBytes(buffer);
+					LogUtils.warn("class not in PersistentStatePO, classType=" + classType + " value=" + obj);
+					throw new RuntimeException("class not in PersistentStatePO, classType=" + classType + " value=" + obj);
+				}
+				ppo = (PersistentStatePO) ppoAttr.getClazz().newInstance();
 				ppo.readFromBytes(buffer);
 			} catch (InstantiationException e) {
 				LOG.error("readFromBytes PersistentStatePO", e);
@@ -186,7 +193,12 @@ public class DataSerializable implements Serializable {
 			String className = buffer.readShortString();
 			SocketWriteable ppo = null;
 			try {
-				Class c = Class.forName(className);
+				Class<?> c = Class.forName(className);
+				if (!c.isAssignableFrom(SocketWriteable.class)) {
+					Object obj = DataSerializable.readFromBytes(buffer);
+					LogUtils.warn("class not in PersistentStatePO, " + className + ":" + obj);
+					throw new RuntimeException("class not in PersistentStatePO, " + className + ":" + obj);
+				}
 				ppo = (SocketWriteable) c.newInstance();
 				ppo.readFromBytes(buffer);
 			} catch (InstantiationException e) {
@@ -313,8 +325,8 @@ public class DataSerializable implements Serializable {
 			destBuffer.writeShortString(((Class) value).getName());
 		} else if ((value instanceof PersistentStatePO)) {
 			PersistentStatePO scobj = (PersistentStatePO) value;
-			destBuffer.writeByte(125);
-			destBuffer.writeInt(PersistentStatePO.getClassType(value.getClass()));
+			destBuffer.writeByte(PersistentStatePO.SerializableTypeCode);
+			destBuffer.writeLong(scobj.getSerUid());
 			scobj.writeToBytes(destBuffer);
 		} else if ((value instanceof SocketWriteable)) {
 			SocketWriteable scobj = (SocketWriteable) value;

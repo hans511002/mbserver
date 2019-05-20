@@ -2,12 +2,22 @@ package com.sobey.mbserver.db.po;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sobey.base.PersistentStatePO;
+import com.sobey.base.annotation.DBTable;
+import com.sobey.base.annotation.ID;
+import com.sobey.base.annotation.Seq;
 import com.sobey.jcg.support.jdbc.Column;
 
 // mb_user
-public class MBUserPO extends SqlTool {
+@XmlRootElement
+@Seq("seq_user_id")
+@DBTable("mb_user")
+public class MBUserPO extends PersistentStatePO {
 	private static final long serialVersionUID = -6425181068617339666L;
 
+	@ID
 	@Column("id")
 	private long userId;
 
